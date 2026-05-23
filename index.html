@@ -554,7 +554,7 @@
   }
   .modal-eyebrow {
     font-size: 10px;
-    color: #444;
+    color: #888;
     letter-spacing: 4px;
     text-transform: uppercase;
     font-weight: 500;
@@ -571,7 +571,7 @@
   }
   .modal-material {
     font-size: 12px;
-    color: #555;
+    color: #999;
     letter-spacing: 1px;
     font-weight: 300;
     margin-top: -10px;
@@ -592,7 +592,7 @@
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #555;
+    color: #888;
   }
   .modal-sizes {
     display: flex;
@@ -604,8 +604,8 @@
     width: 52px;
     height: 52px;
     background: none;
-    border: 1px solid #2a2a2a;
-    color: #555;
+    border: 1px solid #444;
+    color: #bbb;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -617,7 +617,7 @@
   .sz.sz-active { background: var(--white); color: var(--black); border-color: var(--white); }
   .modal-stock {
     font-size: 11px;
-    color: #3a3a3a;
+    color: #777;
     letter-spacing: 1px;
     margin-top: -8px;
   }
@@ -638,14 +638,79 @@
   .modal-add:hover { opacity: .85; }
   .modal-guide {
     font-size: 11px;
-    color: #3a3a3a;
+    color: #888;
     text-decoration: none;
     letter-spacing: 2px;
     text-transform: uppercase;
     text-align: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'Inter', system-ui, sans-serif;
     transition: color .15s;
   }
   .modal-guide:hover { color: var(--white); }
+  /* Sizing guide overlay */
+  .size-overlay {
+    position: absolute;
+    inset: 0;
+    background: #0a0a0a;
+    z-index: 20;
+    padding: 40px;
+    display: none;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+  }
+  .size-overlay.open { display: flex; }
+  .size-overlay h3 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  .size-overlay .sz-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 18px;
+    cursor: pointer;
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: color .15s;
+  }
+  .size-overlay .sz-close:hover { color: var(--white); }
+  .size-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .size-table th {
+    text-align: left;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #666;
+    padding: 0 0 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .size-table td {
+    padding: 14px 0;
+    color: #ccc;
+    border-bottom: 1px solid var(--rule);
+    font-weight: 300;
+    letter-spacing: .5px;
+  }
+  .size-table td:first-child { font-weight: 700; color: var(--white); }
+  .size-note {
+    font-size: 11px;
+    color: #555;
+    font-weight: 300;
+    line-height: 1.7;
+  }
   /* Toast */
   .toast {
     position: fixed;
@@ -743,7 +808,7 @@
           <div class="card-name">Misfits Cheerleader</div>
           <div class="card-sub">Comfort Colors 1717 · Black</div>
         </div>
-        <div class="card-price">$38</div>
+        <div class="card-price">$45</div>
       </div>
     </div>
 
@@ -758,7 +823,7 @@
           <div class="card-name">Four Bars</div>
           <div class="card-sub">Comfort Colors 1717 · Black</div>
         </div>
-        <div class="card-price">$34</div>
+        <div class="card-price">$45</div>
       </div>
     </div>
 
@@ -773,7 +838,7 @@
           <div class="card-name">The Iron Maidens</div>
           <div class="card-sub">Comfort Colors 1717 · Black</div>
         </div>
-        <div class="card-price">$38</div>
+        <div class="card-price">$45</div>
       </div>
     </div>
   </div>
@@ -790,7 +855,7 @@
           <div class="card-name">Heavy Badge</div>
           <div class="card-sub">Comfort Colors 1717 · Black</div>
         </div>
-        <div class="card-price">$38</div>
+        <div class="card-price">$45</div>
       </div>
     </div>
 
@@ -805,7 +870,7 @@
           <div class="card-name">Winged Skull</div>
           <div class="card-sub">Comfort Colors 1717 · Bone</div>
         </div>
-        <div class="card-price">$38</div>
+        <div class="card-price">$45</div>
       </div>
     </div>
   </div>
@@ -885,7 +950,30 @@
       </div>
       <div class="modal-stock">In stock · Ships in 5–7 business days</div>
       <button class="modal-add" id="modalAdd" onclick="addToCart()"></button>
-      <a href="#" class="modal-guide">Sizing Guide →</a>
+      <button class="modal-guide" onclick="openSizeGuide()">Sizing Guide →</button>
+    </div>
+    <!-- Sizing guide overlay (sits inside .modal, covers details panel) -->
+    <div class="size-overlay" id="sizeOverlay">
+      <button class="sz-close" onclick="closeSizeGuide()">✕</button>
+      <h3>Comfort Colors 1717 — Size Guide</h3>
+      <table class="size-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>Chest (in)</th>
+            <th>Body Length (in)</th>
+            <th>Sleeve (in)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>S</td><td>18</td><td>28</td><td>8.5</td></tr>
+          <tr><td>M</td><td>20</td><td>29</td><td>9</td></tr>
+          <tr><td>L</td><td>22</td><td>30</td><td>9.5</td></tr>
+          <tr><td>XL</td><td>24</td><td>31</td><td>10</td></tr>
+          <tr><td>2XL</td><td>26</td><td>32</td><td>10.5</td></tr>
+        </tbody>
+      </table>
+      <p class="size-note">Measurements are of the garment laid flat. Chest is measured across the front, one inch below the armhole. Comfort Colors 1717 has a relaxed, slightly boxy fit. When in doubt, size down.</p>
     </div>
   </div>
 </div>
@@ -898,7 +986,7 @@
       design:    'HMCG-Designs/misfits-cheerleader.png',
       lifestyle: 'HMCG-Designs/misfits-cheerleader2.png',
       material:  'Comfort Colors 1717 · Black',
-      price:     '$38',
+      price:     '$45',
       bg:        '#0a0a0a',
       fit:       'contain'
     },
@@ -906,7 +994,7 @@
       design:    'HMCG-Designs/black-flag-bars.png',
       lifestyle: 'HMCG-Designs/black-flag-bars2.png',
       material:  'Comfort Colors 1717 · Black',
-      price:     '$34',
+      price:     '$45',
       bg:        '#0a0a0a',
       fit:       'contain'
     },
@@ -914,7 +1002,7 @@
       design:    'HMCG-Designs/iron-maidens.png',
       lifestyle: 'HMCG-Designs/iron-maidens2.png',
       material:  'Comfort Colors 1717 · Black',
-      price:     '$38',
+      price:     '$45',
       bg:        '#0a0a0a',
       fit:       'contain'
     },
@@ -922,7 +1010,7 @@
       design:    'HMCG-Designs/harley-badge.png',
       lifestyle: 'HMCG-Designs/harley-badge2.png',
       material:  'Comfort Colors 1717 · Black',
-      price:     '$38',
+      price:     '$45',
       bg:        '#0a0a0a',
       fit:       'contain'
     },
@@ -930,7 +1018,7 @@
       design:    'HMCG-Designs/winged-skull.png',
       lifestyle: 'HMCG-Designs/winged-skull2.png',
       material:  'Comfort Colors 1717 · Bone',
-      price:     '$38',
+      price:     '$45',
       bg:        '#f5f0e8',
       fit:       'contain'
     }
@@ -1005,6 +1093,14 @@
     const toast = document.getElementById('toast');
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  function openSizeGuide() {
+    document.getElementById('sizeOverlay').classList.add('open');
+  }
+
+  function closeSizeGuide() {
+    document.getElementById('sizeOverlay').classList.remove('open');
   }
 </script>
 </body>
