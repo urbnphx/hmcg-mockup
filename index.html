@@ -80,6 +80,54 @@
   }
   .nav-cart:hover { background: var(--white); color: var(--black); }
 
+  /* ── HAMBURGER + MOBILE NAV ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--white);
+    transition: all .2s;
+  }
+  .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 54px; left: 0; right: 0;
+    background: var(--black);
+    border-bottom: 1px solid var(--rule);
+    z-index: 98;
+    flex-direction: column;
+  }
+  .mobile-nav a, .mobile-nav-cart {
+    display: block;
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--rule);
+    font-family: 'Inter', system-ui, sans-serif;
+    cursor: pointer;
+  }
+  .mobile-nav a:last-child, .mobile-nav-cart { border-bottom: none; }
+  .mobile-nav.open { display: flex; }
+
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
@@ -1122,54 +1170,6 @@
     .hero-right { min-height: 80vw; }
     .catalog-grid { grid-template-columns: 1fr; }
   }
-
-  /* ── HAMBURGER + MOBILE NAV ── */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    flex-shrink: 0;
-  }
-  .hamburger span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--white);
-    transition: all .2s;
-  }
-  .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.active span:nth-child(2) { opacity: 0; }
-  .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  .mobile-nav {
-    display: none;
-    position: fixed;
-    top: 54px; left: 0; right: 0;
-    background: var(--black);
-    border-bottom: 1px solid var(--rule);
-    z-index: 98;
-    flex-direction: column;
-  }
-  .mobile-nav a, .mobile-nav-cart {
-    display: block;
-    color: var(--white);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 18px 24px;
-    border-bottom: 1px solid var(--rule);
-    font-family: 'Inter', system-ui, sans-serif;
-    cursor: pointer;
-  }
-  .mobile-nav a:last-child, .mobile-nav-cart { border-bottom: none; }
-  .mobile-nav.open { display: flex; }
 
   /* ── CATALOG ── */
   .catalog-head {
