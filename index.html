@@ -1109,7 +1109,7 @@
     .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
     footer { padding: 60px 20px 32px; }
 
-    .catalog-grid { grid-template-columns: repeat(3, 1fr); }
+    .catalog-grid { grid-template-columns: repeat(2, 1fr); }
     .catalog-head { flex-direction: column; align-items: flex-start; gap: 16px; }
     .filter-btn { padding: 10px 14px; font-size: 9px; }
   }
@@ -1120,7 +1120,7 @@
     .footer-top { grid-template-columns: 1fr; gap: 28px; }
     .modal-img-wrap { height: 80vw; }
     .hero-right { min-height: 80vw; }
-    .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+    .catalog-grid { grid-template-columns: 1fr; }
   }
 
   /* ── HAMBURGER + MOBILE NAV ── */
@@ -1204,8 +1204,9 @@
   .filter-btn.filter-active { color: var(--white); background: var(--off); }
   .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: var(--gap);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
   }
 
   /* ── GENDER SELECTOR ── */
@@ -1261,8 +1262,8 @@
 <nav>
   <div class="nav-logo">Heavy Metal Cheer Gym</div>
   <div class="nav-links">
-    <a href="#catalog">Catalog</a>
-    <a href="#catalog">Hoodies</a>
+    <a href="#catalog">Shop</a>
+    <a href="#hoodies">Hoodies</a>
     <a href="#story">Our Story</a>
     <a href="#" onclick="openContact(event)">Contact</a>
     <div class="nav-cart" id="navCart" onclick="openCart()" style="cursor:pointer;">Cart (0)</div>
@@ -1273,7 +1274,7 @@
 </nav>
 <div class="mobile-nav" id="mobileNav">
   <a href="#catalog" onclick="closeMobileNav()">T-Shirts</a>
-  <a href="#catalog" onclick="closeMobileNav()">Hoodies</a>
+  <a href="#hoodies" onclick="closeMobileNav()">Hoodies</a>
   <a href="#story" onclick="closeMobileNav()">Our Story</a>
   <a href="#" onclick="openContact(event);closeMobileNav()">Contact</a>
   <div class="mobile-nav-cart" onclick="openCart();closeMobileNav()">Cart</div>
@@ -1465,6 +1466,170 @@
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- Drop 01 — T-Shirts (editorial) -->
+<section class="products" id="drop01">
+  <div class="products-head">
+    <h2>Drop 01 — T-Shirts</h2>
+    <span class="count">5 Designs · Comfort Colors 1717</span>
+  </div>
+  <div class="grid">
+    <div class="card" data-product="Misfits Cheerleader" data-type="tee">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/misfits-cheerleader.png" alt="Misfits Cheerleader Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/misfits-cheerleader2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Misfits Cheerleader</div>
+          <div class="card-sub">Comfort Colors 1717 · Black</div>
+        </div>
+        <div class="card-price">$45</div>
+      </div>
+    </div>
+    <div class="card" data-product="Four Bars" data-type="tee">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/black-flag-bars.png" alt="Four Bars Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/black-flag-bars3.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Four Bars</div>
+          <div class="card-sub">Comfort Colors 1717 · Black</div>
+        </div>
+        <div class="card-price">$45</div>
+      </div>
+    </div>
+    <div class="card" data-product="The Iron Maidens" data-type="tee">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/iron-maidens.png" alt="The Iron Maidens Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/iron-maidens2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">The Iron Maidens</div>
+          <div class="card-sub">Comfort Colors 1717 · Black</div>
+        </div>
+        <div class="card-price">$45</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-row2">
+    <div class="card" data-product="Heavy Badge" data-type="tee">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/harley-badge.png" alt="Heavy Badge Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/harley-badge2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Heavy Badge</div>
+          <div class="card-sub">Comfort Colors 1717 · Black</div>
+        </div>
+        <div class="card-price">$45</div>
+      </div>
+    </div>
+    <div class="card" data-product="Winged Skull" data-type="tee">
+      <div class="card-img" style="background:#f5f0e8;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/winged-skull.png" alt="Winged Skull Tee" class="primary" style="width:85%;height:85%;object-fit:contain;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/winged-skull2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Winged Skull</div>
+          <div class="card-sub">Comfort Colors 1717 · Bone</div>
+        </div>
+        <div class="card-price">$45</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Drop 01 — Hoodies (editorial) -->
+<section class="products" id="hoodies">
+  <div class="products-head">
+    <h2>Drop 01 — Hoodies</h2>
+    <span class="count">5 Designs · Comfort Colors 1567</span>
+  </div>
+  <div class="grid">
+    <div class="card" data-product="Misfits Cheerleader Hoodie" data-type="hoodie">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/misfits-cheerleader-hoodie.png" alt="Misfits Cheerleader Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/misfits-cheerleader-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Misfits Cheerleader</div>
+          <div class="card-sub">Comfort Colors 1567 · Black</div>
+        </div>
+        <div class="card-price">$115</div>
+      </div>
+    </div>
+    <div class="card" data-product="Four Bars Hoodie" data-type="hoodie">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/black-flag-bars-hoodie.png" alt="Four Bars Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/black-flag-bars-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Four Bars</div>
+          <div class="card-sub">Comfort Colors 1567 · Black</div>
+        </div>
+        <div class="card-price">$115</div>
+      </div>
+    </div>
+    <div class="card" data-product="The Iron Maidens Hoodie" data-type="hoodie">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/iron-maidens-hoodie.png" alt="The Iron Maidens Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/iron-maidens-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">The Iron Maidens</div>
+          <div class="card-sub">Comfort Colors 1567 · Black</div>
+        </div>
+        <div class="card-price">$115</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-row2">
+    <div class="card" data-product="Heavy Badge Hoodie" data-type="hoodie">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/harley-badge-hoodie.png" alt="Heavy Badge Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/harley-badge-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Heavy Badge</div>
+          <div class="card-sub">Comfort Colors 1567 · Black</div>
+        </div>
+        <div class="card-price">$115</div>
+      </div>
+    </div>
+    <div class="card" data-product="Winged Skull Hoodie" data-type="hoodie">
+      <div class="card-img" style="background:#f5f0e8;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/winged-skull-hoodie.png" alt="Winged Skull Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/winged-skull-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Winged Skull</div>
+          <div class="card-sub">Comfort Colors 1567 · Bone</div>
+        </div>
+        <div class="card-price">$115</div>
+      </div>
+    </div>
   </div>
 </section>
 
