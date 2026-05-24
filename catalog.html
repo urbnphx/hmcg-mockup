@@ -690,17 +690,29 @@
     .nav-logo { font-size: 11px; letter-spacing: 3px; }
     .hamburger { display: flex; }
 
-    .page-header { padding: 54px 16px 0; flex-direction: column; gap: 0; align-items: flex-start; }
-    .page-header-left { padding-top: 32px; padding-bottom: 24px; }
-    .catalog-filters { border-left: none; border-top: 1px solid var(--rule); align-self: stretch; }
-    .filter-btn { padding: 14px 16px; font-size: 9px; }
+    /* Page header: title full-bleed, filters strip edge-to-edge */
+    .page-header {
+      padding: 54px 0 0;
+      flex-direction: column;
+      gap: 0;
+      align-items: flex-start;
+    }
+    .page-header-left { padding: 28px 16px 20px; }
+    .catalog-filters {
+      border-left: none;
+      border-top: 1px solid var(--rule);
+      align-self: stretch;
+    }
+    /* Each filter button fills equal share of the strip */
+    .filter-btn { flex: 1; text-align: center; padding: 16px 8px; font-size: 9px; }
 
+    /* Tablet: 2 columns */
     .catalog-grid { grid-template-columns: repeat(2, 1fr); }
 
     .card-name { font-size: 12px; }
     .card-sub { font-size: 10px; }
     .card-price { font-size: 14px; }
-    .card-body { padding: 16px; }
+    .card-body { padding: 14px; }
 
     .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
     footer { padding: 60px 20px 32px; }
@@ -727,8 +739,14 @@
     .cart-foot { padding: 16px 20px; }
   }
 
-  @media (max-width: 480px) {
+  /* Phone: single column at 640px — catches all portrait phones */
+  @media (max-width: 640px) {
     .catalog-grid { grid-template-columns: 1fr; }
+    /* On single column, image doesn't need to be quite so tall */
+    .card-img { aspect-ratio: 3/4; }
+  }
+
+  @media (max-width: 480px) {
     .footer-top { grid-template-columns: 1fr; gap: 28px; }
     .modal-img-wrap { height: 80vw; }
   }
