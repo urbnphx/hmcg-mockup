@@ -149,27 +149,13 @@
   .hero-cta:hover { opacity: .85; }
 
   .hero-right {
-    background: var(--off);
+    background: var(--off) center/cover no-repeat;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: flex-end;
     position: relative;
     overflow: hidden;
-  }
-
-  .hero-img-box {
-    width: 70%;
-    aspect-ratio: 3/4;
-    background: #1a1a1a;
-    border: 1px solid var(--rule);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #2a2a2a;
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    font-weight: 500;
+    min-height: 100%;
   }
 
   .hero-counter {
@@ -998,6 +984,116 @@
   }
   .policy-block a { color: var(--white); }
 
+  /* ── CAROUSEL ── */
+  .car-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,.55); border: 1px solid #333;
+    color: var(--white); width: 38px; height: 38px;
+    cursor: pointer; font-size: 22px; line-height: 1;
+    font-family: inherit; z-index: 5;
+    transition: background .15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .car-btn:hover { background: rgba(0,0,0,.85); }
+  .car-prev { left: 10px; }
+  .car-next { right: 10px; }
+  .car-dots {
+    display: flex; justify-content: center; gap: 7px;
+    padding: 13px 0; border-top: 1px solid var(--rule); flex-shrink: 0;
+    min-height: 38px;
+  }
+  .car-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #333; cursor: pointer; border: none;
+    transition: background .15s; padding: 0;
+  }
+  .car-dot.dot-active { background: var(--white); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 860px) {
+    /* Nav */
+    nav { padding: 0 20px; height: 54px; }
+    .nav-links a { display: none; }
+    .nav-logo { font-size: 11px; letter-spacing: 3px; }
+
+    /* Hero */
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left {
+      padding: 80px 24px 48px; border-right: none;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-headline { font-size: clamp(26px, 7vw, 40px); }
+    .hero-bottom { flex-direction: column; gap: 24px; align-items: flex-start; }
+    .hero-sub { max-width: 100%; }
+    .hero-right { min-height: 72vw; }
+
+    /* Ticker */
+    .ticker-inner { font-size: 9px; letter-spacing: 3px; }
+
+    /* Products */
+    .products { padding: 60px 16px; }
+    .products-head { margin-bottom: 32px; }
+    .grid { grid-template-columns: 1fr 1fr; }
+    .grid-row2 { grid-template-columns: 1fr 1fr; }
+    .card-name { font-size: 12px; }
+    .card-sub { font-size: 10px; }
+    .card-price { font-size: 14px; }
+    .card-body { padding: 16px; }
+
+    /* Statement */
+    .statement { flex-direction: column; padding: 60px 24px; gap: 36px; }
+    .statement h2 { font-size: clamp(36px, 10vw, 60px); }
+    .statement-right { flex: none; width: 100%; }
+
+    /* Our Story */
+    .story-expanded {
+      grid-template-columns: 1fr; padding: 60px 24px; gap: 0;
+    }
+    .story-right {
+      border-left: none; padding-left: 0;
+      border-top: 1px solid var(--rule); padding-top: 40px; margin-top: 40px;
+    }
+
+    /* Modal */
+    .modal {
+      grid-template-columns: 1fr;
+      grid-template-rows: 52vw 1fr;
+      width: 100%; max-width: 100vw;
+      max-height: 95vh;
+      border-left: none; border-right: none;
+      border-radius: 0;
+      align-self: flex-end;
+    }
+    .modal-img-panel { border-right: none; border-bottom: 1px solid var(--rule); }
+    .modal-img-wrap { min-height: 0; padding: 16px; }
+    .modal-details { padding: 24px 20px 32px; overflow-y: auto; gap: 16px; }
+    .modal-name { font-size: 22px; }
+    .modal-overlay { align-items: flex-end; }
+    .size-overlay { padding: 28px 20px; }
+
+    /* Cart */
+    .cart-drawer { width: 100%; }
+    .cart-head { padding: 20px; }
+    .cart-items { padding: 16px 20px; }
+    .cart-foot { padding: 16px 20px; }
+
+    /* Contact / Policy */
+    .contact-box { padding: 40px 24px; }
+    .policy-box { padding: 40px 24px; }
+
+    /* Footer */
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+    footer { padding: 60px 20px 32px; }
+  }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .grid-row2 { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .modal { grid-template-rows: 60vw 1fr; }
+    .hero-right { min-height: 80vw; }
+  }
+
   /* ── BADGE ── */
   .mockup-badge {
     position: fixed;
@@ -1037,11 +1133,8 @@
       <a href="#" class="hero-cta">Shop Now</a>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-img-box" style="display:flex;align-items:center;justify-content:center;">
-      <img src="HMCG-Designs/misfits-cheerleader.png" alt="" style="width:80%;height:80%;object-fit:contain;" onerror="this.style.display='none'">
-    </div>
-    <div class="hero-counter">01 / 05</div>
+  <div class="hero-right" style="background-image:url('HMCG-Designs/HMCG-brand-wide-mood-hoodie-shot2.png')">
+    <div class="hero-counter">Drop 01</div>
   </div>
 </section>
 
@@ -1401,11 +1494,10 @@
     <div class="modal-img-panel">
       <div class="modal-img-wrap" id="modalImgWrap">
         <img id="modalImg" src="" alt="" />
+        <button class="car-btn car-prev" onclick="carouselNav(-1)">&#8249;</button>
+        <button class="car-btn car-next" onclick="carouselNav(1)">&#8250;</button>
       </div>
-      <div class="modal-img-toggle">
-        <button id="btnDesign" class="tog-active" onclick="setModalImg('design')">Design</button>
-        <button id="btnLifestyle" onclick="setModalImg('lifestyle')">Lifestyle</button>
-      </div>
+      <div class="car-dots" id="carDots"></div>
     </div>
     <div class="modal-details">
       <div class="modal-eyebrow">Heavy Metal Cheer Gym · Drop 01</div>
@@ -1549,91 +1641,65 @@
   }
 
   /* ── PRODUCT DATA ── */
+  const D = 'HMCG-Designs/';
   const products = {
+    /* ── HOODIES ── */
     'Misfits Cheerleader Hoodie': {
-      design:    'HMCG-Designs/misfits-cheerleader-hoodie.png',
-      lifestyle: 'HMCG-Designs/misfits-cheerleader-hoodie2.png',
-      material:  'Comfort Colors 1567 · Black',
-      price:     '$115',
-      bg:        '#0a0a0a',
-      fit:       'contain'
+      images: [D+'misfits-cheerleader-hoodie.png', D+'misfits-cheerleader-hoodie2.png',
+               D+'misfits-cheerleader-hoodie3.png', D+'misfits-cheerleader-hoodie4.png',
+               D+'misfits-cheerleader-hoodie5.png', D+'misfits-cheerleader-hoodie6.png',
+               D+'HMCG-brand-wide-mood-hoodie-shot.png'],
+      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
     },
     'Four Bars Hoodie': {
-      design:    'HMCG-Designs/black-flag-bars-hoodie.png',
-      lifestyle: 'HMCG-Designs/black-flag-bars-hoodie2.png',
-      material:  'Comfort Colors 1567 · Black',
-      price:     '$115',
-      bg:        '#0a0a0a',
-      fit:       'contain'
+      images: [D+'black-flag-bars-hoodie.png', D+'black-flag-bars-hoodie2.png',
+               D+'black-flag-bars-hoodie3.png', D+'black-flag-bars-hoodie4.png',
+               D+'black-flag-bars-hoodie5.png',
+               D+'HMCG-brand-wide-lifestyle-hoodie-shot.png'],
+      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
     },
     'The Iron Maidens Hoodie': {
-      design:    'HMCG-Designs/iron-maidens-hoodie.png',
-      lifestyle: 'HMCG-Designs/iron-maidens-hoodie2.png',
-      material:  'Comfort Colors 1567 · Black',
-      price:     '$115',
-      bg:        '#0a0a0a',
-      fit:       'contain'
+      images: [D+'iron-maidens-hoodie.png', D+'iron-maidens-hoodie2.png',
+               D+'iron-maidens-hoodie3.png', D+'iron-maidens-hoodie4.png',
+               D+'HMCG-brand-wide-lifestyle-hoodie-shot2.png'],
+      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
     },
     'Heavy Badge Hoodie': {
-      design:    'HMCG-Designs/harley-badge-hoodie.png',
-      lifestyle: 'HMCG-Designs/harley-badge-hoodie2.png',
-      material:  'Comfort Colors 1567 · Black',
-      price:     '$115',
-      bg:        '#0a0a0a',
-      fit:       'contain'
+      images: [D+'harley-badge-hoodie.png', D+'harley-badge-hoodie2.png',
+               D+'harley-badge-hoodie3.png', D+'harley-badge-hoodie4.png'],
+      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
     },
     'Winged Skull Hoodie': {
-      design:    'HMCG-Designs/winged-skull-hoodie.png',
-      lifestyle: 'HMCG-Designs/winged-skull-hoodie2.png',
-      material:  'Comfort Colors 1567 · Bone',
-      price:     '$115',
-      bg:        '#f5f0e8',
-      fit:       'contain'
+      images: [D+'winged-skull-hoodie.png', D+'winged-skull-hoodie2.png'],
+      material: 'Comfort Colors 1567 · Bone', price: '$115', bg: '#f5f0e8', fit: 'cover'
     },
+    /* ── TEES ── */
     'Misfits Cheerleader': {
-      design:    'HMCG-Designs/misfits-cheerleader.png',
-      lifestyle: 'HMCG-Designs/misfits-cheerleader2.png',
-      material:  'Comfort Colors 1717 · Black',
-      price:     '$45',
-      bg:        '#0a0a0a',
-      fit:       'contain'
+      images: [D+'misfits-cheerleader.png', D+'misfits-cheerleader2.png'],
+      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
     },
     'Four Bars': {
-      design:    'HMCG-Designs/black-flag-bars.png',
-      lifestyle: 'HMCG-Designs/black-flag-bars2.png',
-      material:  'Comfort Colors 1717 · Black',
-      price:     '$45',
-      bg:        '#0a0a0a',
-      fit:       'contain'
+      images: [D+'black-flag-bars.png', D+'black-flag-bars2.png', D+'black-flag-bars3.png'],
+      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
     },
     'The Iron Maidens': {
-      design:    'HMCG-Designs/iron-maidens.png',
-      lifestyle: 'HMCG-Designs/iron-maidens2.png',
-      material:  'Comfort Colors 1717 · Black',
-      price:     '$45',
-      bg:        '#0a0a0a',
-      fit:       'contain'
+      images: [D+'iron-maidens.png', D+'iron-maidens2.png',
+               D+'iron-maidens3.png', D+'iron-maidens4.png'],
+      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
     },
     'Heavy Badge': {
-      design:    'HMCG-Designs/harley-badge.png',
-      lifestyle: 'HMCG-Designs/harley-badge2.png',
-      material:  'Comfort Colors 1717 · Black',
-      price:     '$45',
-      bg:        '#0a0a0a',
-      fit:       'contain'
+      images: [D+'harley-badge.png', D+'harley-badge2.png'],
+      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
     },
     'Winged Skull': {
-      design:    'HMCG-Designs/winged-skull.png',
-      lifestyle: 'HMCG-Designs/winged-skull2.png',
-      material:  'Comfort Colors 1717 · Bone',
-      price:     '$45',
-      bg:        '#f5f0e8',
-      fit:       'contain'
+      images: [D+'winged-skull.png', D+'winged-skull2.png'],
+      material: 'Comfort Colors 1717 · Bone', price: '$45', bg: '#f5f0e8', fit: 'contain'
     }
   };
 
   let current = null;
   let currentName = '';
+  let currentImgIdx = 0;
 
   document.querySelectorAll('.card').forEach(card => {
     card.style.cursor = 'pointer';
@@ -1646,24 +1712,49 @@
   function openModal(name) {
     const p = products[name];
     if (!p) return;
-    current = p;
-    currentName = name;
+    current = p; currentName = name; currentImgIdx = 0;
     document.getElementById('modalName').textContent = name;
     document.getElementById('modalMaterial').textContent = p.material;
     document.getElementById('modalPrice').textContent = p.price;
     document.getElementById('modalAdd').textContent = 'Add to Cart — ' + p.price;
-    const img = document.getElementById('modalImg');
-    img.src = p.design;
-    img.style.objectFit = p.fit;
     document.getElementById('modalImgWrap').style.background = p.bg;
-    document.getElementById('btnDesign').classList.add('tog-active');
-    document.getElementById('btnLifestyle').classList.remove('tog-active');
+    renderCarousel();
     document.querySelectorAll('.sz').forEach(b => b.classList.remove('sz-active'));
     document.querySelectorAll('.sz')[2].classList.add('sz-active');
     document.getElementById('sizeOverlay').classList.remove('open');
     document.getElementById('modalOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
+
+  function renderCarousel() {
+    if (!current) return;
+    const imgs = current.images;
+    const img = document.getElementById('modalImg');
+    img.src = imgs[currentImgIdx];
+    img.style.objectFit = currentImgIdx === 0 ? current.fit : 'cover';
+    const showNav = imgs.length > 1;
+    document.querySelector('.car-prev').style.display = showNav ? 'flex' : 'none';
+    document.querySelector('.car-next').style.display = showNav ? 'flex' : 'none';
+    document.getElementById('carDots').innerHTML = imgs.map((_, i) =>
+      `<button class="car-dot${i === currentImgIdx ? ' dot-active' : ''}" onclick="goToImg(${i})"></button>`
+    ).join('');
+  }
+
+  function carouselNav(dir) {
+    if (!current) return;
+    currentImgIdx = (currentImgIdx + dir + current.images.length) % current.images.length;
+    renderCarousel();
+  }
+
+  function goToImg(i) { currentImgIdx = i; renderCarousel(); }
+
+  // Touch swipe
+  let _tx = 0;
+  document.getElementById('modalImgWrap').addEventListener('touchstart', e => { _tx = e.touches[0].clientX; }, {passive:true});
+  document.getElementById('modalImgWrap').addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - _tx;
+    if (Math.abs(dx) > 44) carouselNav(dx < 0 ? 1 : -1);
+  }, {passive:true});
 
   function closeModal() {
     document.getElementById('modalOverlay').classList.remove('open');
@@ -1676,32 +1767,8 @@
 
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
-    closeModal();
-    closeCart();
-    closeContact();
-    closeShipping();
-    closeReturns();
-    closeSizeGuide();
+    closeModal(); closeCart(); closeContact(); closeShipping(); closeReturns(); closeSizeGuide();
   });
-
-  function setModalImg(type) {
-    if (!current) return;
-    const img = document.getElementById('modalImg');
-    const wrap = document.getElementById('modalImgWrap');
-    if (type === 'design') {
-      img.src = current.design;
-      img.style.objectFit = 'contain';
-      wrap.style.background = current.bg;
-      document.getElementById('btnDesign').classList.add('tog-active');
-      document.getElementById('btnLifestyle').classList.remove('tog-active');
-    } else {
-      img.src = current.lifestyle;
-      img.style.objectFit = 'cover';
-      wrap.style.background = '#111';
-      document.getElementById('btnLifestyle').classList.add('tog-active');
-      document.getElementById('btnDesign').classList.remove('tog-active');
-    }
-  }
 
   function pickSize(btn) {
     document.querySelectorAll('.sz').forEach(b => b.classList.remove('sz-active'));
@@ -1715,7 +1782,7 @@
     if (existing) {
       existing.qty++;
     } else {
-      cart.push({ name: currentName, size, price: current.price, img: current.design, qty: 1 });
+      cart.push({ name: currentName, size, price: current.price, img: current.images[0], qty: 1 });
     }
     updateCartCount();
     renderCart();
