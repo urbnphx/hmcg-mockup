@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — Heavy Metal Cheer Gym</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,700;0,900;1,900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #000;
+    --white: #fff;
+    --off:   #111;
+    --dim:   #aaa;
+    --rule:  #1c1c1c;
+    --gap:   1px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 60px;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .nav-logo {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
+    transition: color .15s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a.nav-active { color: var(--white); }
+
+  .nav-cart {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    border: 1px solid var(--white);
+    padding: 7px 18px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .nav-cart:hover { background: var(--white); color: var(--black); }
+
+  /* ── HAMBURGER + MOBILE NAV ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--white);
+    transition: all .2s;
+  }
+  .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 54px; left: 0; right: 0;
+    background: var(--black);
+    border-bottom: 1px solid var(--rule);
+    z-index: 98;
+    flex-direction: column;
+  }
+  .mobile-nav a, .mobile-nav-cart {
+    display: block;
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--rule);
+    font-family: 'Inter', system-ui, sans-serif;
+    cursor: pointer;
+  }
+  .mobile-nav a:last-child, .mobile-nav-cart { border-bottom: none; }
+  .mobile-nav.open { display: flex; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    padding-top: 60px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-left: 48px;
+    padding-right: 48px;
+    padding-bottom: 0;
+  }
+  .page-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 48px;
+    padding-bottom: 32px;
+  }
+  .page-header-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .page-header h1 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    line-height: 1;
+    color: var(--white);
+  }
+  .catalog-filters {
+    display: flex;
+    border-left: 1px solid var(--rule);
+    align-self: stretch;
+  }
+  .filter-btn {
+    background: none;
+    border: none;
+    border-right: 1px solid var(--rule);
+    color: var(--dim);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0 24px;
+    cursor: pointer;
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .filter-btn:last-child { border-right: none; }
+  .filter-btn:hover { color: var(--white); }
+  .filter-btn.filter-active { color: var(--white); background: var(--off); }
+
+  /* ── CATALOG GRID ── */
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--black);
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .card:hover { background: var(--off); }
+
+  .card-img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--off);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #2a2a2a;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 500;
+    position: relative;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .card-img img.primary {
+    transition: opacity .4s ease;
+    position: relative;
+    z-index: 1;
+  }
+  .card-img img.secondary {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity .4s ease;
+    z-index: 2;
+  }
+  .card:hover .card-img img.primary { opacity: 0; }
+  .card:hover .card-img img.secondary { opacity: 1; }
+
+  .card-new {
+    position: absolute;
+    top: 20px; left: 0;
+    background: var(--white);
+    color: var(--black);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+  }
+
+  .card-body {
+    padding: 24px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .card-left { flex: 1; }
+  .card-name {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .card-sub {
+    font-size: 12px;
+    color: var(--dim);
+    font-weight: 300;
+    letter-spacing: .5px;
+  }
+  .card-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 80px 48px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .footer-logo {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--white);
+    display: block;
+    margin-bottom: 20px;
+  }
+  .footer-about {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--dim);
+    line-height: 1.8;
+  }
+  .footer-col h4 {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  .footer-col a {
+    display: block;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--dim);
+    text-decoration: none;
+    margin-bottom: 14px;
+    transition: color .15s;
+  }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom {
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #777;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.88);
+    backdrop-filter: blur(14px);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: #0a0a0a;
+    border: 1px solid var(--rule);
+    width: 90vw; max-width: 960px;
+    max-height: 88vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 20px; right: 20px;
+    background: none; border: none;
+    color: #444; font-size: 20px;
+    cursor: pointer; z-index: 10;
+    line-height: 1; font-family: 'Inter', system-ui, sans-serif;
+    transition: color .15s;
+  }
+  .modal-close:hover { color: var(--white); }
+  .modal-img-panel {
+    display: flex; flex-direction: column;
+    border-right: 1px solid var(--rule);
+  }
+  .modal-img-wrap {
+    flex: 1; display: flex;
+    align-items: center; justify-content: center;
+    min-height: 380px; overflow: hidden; padding: 32px;
+  }
+  .modal-img-wrap img {
+    max-width: 100%; max-height: 440px;
+    transition: opacity .25s ease;
+  }
+  .modal-details {
+    padding: 52px 40px 40px;
+    display: flex; flex-direction: column;
+    gap: 22px; overflow-y: auto;
+  }
+  .modal-eyebrow {
+    font-size: 10px; color: #888;
+    letter-spacing: 4px; text-transform: uppercase; font-weight: 500;
+  }
+  .modal-name {
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: 900; font-style: italic;
+    text-transform: uppercase; letter-spacing: -0.5px;
+    line-height: 1.05; color: var(--white); margin-top: -6px;
+  }
+  .modal-material {
+    font-size: 12px; color: #999;
+    letter-spacing: 1px; font-weight: 300; margin-top: -10px;
+  }
+  .modal-price {
+    font-size: 26px; font-weight: 700;
+    color: var(--white); letter-spacing: 1px;
+  }
+  .modal-divider { height: 1px; background: var(--rule); }
+  .modal-size-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase; color: #888;
+  }
+  .modal-gender {
+    display: flex; gap: 8px;
+  }
+  .gender-btn {
+    flex: 1; background: none; border: 1px solid #444;
+    color: #777; font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 10px; cursor: pointer;
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: all .15s;
+  }
+  .gender-btn.gender-active { background: var(--white); color: var(--black); border-color: var(--white); }
+  .gender-note {
+    font-size: 11px; color: #666;
+    letter-spacing: .5px; margin-top: -8px; font-weight: 300;
+  }
+  .modal-sizes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: -8px; }
+  .sz {
+    width: 52px; height: 52px;
+    background: none; border: 1px solid #444;
+    color: #bbb; font-size: 11px; font-weight: 700;
+    letter-spacing: 1px; cursor: pointer;
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: all .15s;
+  }
+  .sz:hover { border-color: var(--white); color: var(--white); }
+  .sz.sz-active { background: var(--white); color: var(--black); border-color: var(--white); }
+  .modal-stock {
+    font-size: 11px; color: #777;
+    letter-spacing: 1px; margin-top: -8px;
+  }
+  .modal-add {
+    background: var(--white); color: var(--black);
+    border: none; padding: 18px 32px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase;
+    cursor: pointer; font-family: 'Inter', system-ui, sans-serif;
+    transition: opacity .15s; width: 100%;
+  }
+  .modal-add:hover { opacity: .85; }
+  .modal-guide {
+    font-size: 11px; color: #888;
+    letter-spacing: 2px; text-transform: uppercase;
+    text-align: center; cursor: pointer;
+    background: none; border: none;
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: color .15s;
+  }
+  .modal-guide:hover { color: var(--white); }
+  .size-overlay {
+    position: absolute; inset: 0;
+    background: #0a0a0a; z-index: 20;
+    padding: 40px; display: none;
+    flex-direction: column; gap: 24px; overflow-y: auto;
+  }
+  .size-overlay.open { display: flex; }
+  .size-overlay h3 {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase; color: var(--white);
+  }
+  .size-overlay .sz-close {
+    position: absolute; top: 20px; right: 20px;
+    background: none; border: none;
+    color: #666; font-size: 18px;
+    cursor: pointer; font-family: 'Inter', system-ui, sans-serif;
+    transition: color .15s;
+  }
+  .size-overlay .sz-close:hover { color: var(--white); }
+  .size-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .size-table th {
+    text-align: left; font-size: 9px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase; color: #666;
+    padding: 0 0 14px 0; border-bottom: 1px solid var(--rule);
+  }
+  .size-table td {
+    padding: 14px 0; color: #ccc;
+    border-bottom: 1px solid var(--rule);
+    font-weight: 300; letter-spacing: .5px;
+  }
+  .size-table td:first-child { font-weight: 700; color: var(--white); }
+  .size-note { font-size: 11px; color: #555; font-weight: 300; line-height: 1.7; }
+
+  /* ── CAROUSEL ── */
+  .car-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,.55); border: 1px solid #333;
+    color: var(--white); width: 38px; height: 38px;
+    cursor: pointer; font-size: 22px; line-height: 1;
+    font-family: inherit; z-index: 5;
+    transition: background .15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .car-btn:hover { background: rgba(0,0,0,.85); }
+  .car-prev { left: 10px; }
+  .car-next { right: 10px; }
+  .car-dots {
+    display: flex; justify-content: center; gap: 7px;
+    padding: 13px 0; border-top: 1px solid var(--rule);
+    flex-shrink: 0; min-height: 38px;
+  }
+  .car-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #333; cursor: pointer; border: none;
+    transition: background .15s; padding: 0;
+  }
+  .car-dot.dot-active { background: var(--white); }
+
+  /* ── CART DRAWER ── */
+  .cart-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.6);
+    z-index: 300; opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .cart-backdrop.open { opacity: 1; pointer-events: all; }
+  .cart-drawer {
+    position: fixed; top: 0; right: 0;
+    width: 420px; max-width: 100vw; height: 100vh;
+    background: #0d0d0d; border-left: 1px solid var(--rule);
+    z-index: 400; display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+  }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-head {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--rule); flex-shrink: 0;
+  }
+  .cart-head span {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase;
+  }
+  .cart-head button {
+    background: none; border: none;
+    color: #777; font-size: 18px;
+    cursor: pointer; font-family: inherit;
+    transition: color .15s; line-height: 1;
+  }
+  .cart-head button:hover { color: var(--white); }
+  .cart-items {
+    flex: 1; overflow-y: auto; padding: 24px 28px;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .cart-empty { font-size: 13px; color: #555; font-weight: 300; letter-spacing: 1px; margin-top: 16px; }
+  .cart-item { display: flex; gap: 16px; align-items: flex-start; }
+  .cart-item-img {
+    width: 72px; height: 72px; object-fit: contain;
+    background: #0a0a0a; border: 1px solid var(--rule);
+    flex-shrink: 0; padding: 6px;
+  }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-size: 13px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 6px; }
+  .cart-item-meta { font-size: 11px; color: #888; letter-spacing: 1px; margin-bottom: 12px; font-weight: 300; }
+  .cart-item-qty { display: flex; align-items: center; gap: 12px; }
+  .cart-item-qty button {
+    background: none; border: 1px solid #333;
+    color: #aaa; width: 28px; height: 28px;
+    cursor: pointer; font-size: 14px;
+    font-family: inherit; transition: all .15s; line-height: 1;
+  }
+  .cart-item-qty button:hover { border-color: var(--white); color: var(--white); }
+  .cart-item-qty span { font-size: 13px; font-weight: 700; min-width: 16px; text-align: center; }
+  .cart-item-remove {
+    background: none; border: none; color: #444;
+    font-size: 14px; cursor: pointer;
+    font-family: inherit; transition: color .15s; flex-shrink: 0; padding: 2px;
+  }
+  .cart-item-remove:hover { color: var(--white); }
+  .cart-foot {
+    border-top: 1px solid var(--rule);
+    padding: 24px 28px; flex-shrink: 0;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .cart-subtotal { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+  .cart-subtotal span:last-child { font-weight: 700; }
+  .cart-checkout {
+    background: var(--white); color: var(--black);
+    border: none; padding: 18px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase;
+    cursor: pointer; font-family: inherit;
+    transition: opacity .15s; width: 100%;
+  }
+  .cart-checkout:hover { opacity: .85; }
+  .cart-note { font-size: 10px; color: #555; text-align: center; letter-spacing: 1px; }
+
+  /* ── CONTACT MODAL ── */
+  .contact-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.88);
+    backdrop-filter: blur(14px);
+    z-index: 500; display: flex;
+    align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .contact-overlay.open { opacity: 1; pointer-events: all; }
+  .contact-box {
+    background: #0a0a0a; border: 1px solid var(--rule);
+    width: 480px; max-width: 92vw;
+    padding: 52px 48px; position: relative;
+    display: flex; flex-direction: column; gap: 28px;
+  }
+  .contact-close {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; color: #555;
+    font-size: 20px; cursor: pointer;
+    font-family: inherit; transition: color .15s;
+  }
+  .contact-close:hover { color: var(--white); }
+  .contact-label { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #777; }
+  .contact-box h2 { font-size: 28px; font-weight: 900; font-style: italic; text-transform: uppercase; line-height: 1.05; letter-spacing: -0.5px; margin-top: -12px; }
+  .contact-divider { height: 1px; background: var(--rule); }
+  .contact-row { display: flex; flex-direction: column; gap: 6px; }
+  .contact-row-label { font-size: 9px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #666; }
+  .contact-row-val { font-size: 14px; font-weight: 300; color: var(--white); letter-spacing: .5px; text-decoration: none; transition: color .15s; }
+  .contact-row-val:hover { color: #aaa; }
+
+  /* ── POLICY MODALS ── */
+  .policy-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.92);
+    backdrop-filter: blur(14px);
+    z-index: 500; display: flex;
+    align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .policy-overlay.open { opacity: 1; pointer-events: all; }
+  .policy-box {
+    background: #0a0a0a; border: 1px solid var(--rule);
+    width: 640px; max-width: 94vw;
+    max-height: 82vh; overflow-y: auto;
+    padding: 56px 52px; position: relative;
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .policy-close {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; color: #555;
+    font-size: 20px; cursor: pointer;
+    font-family: inherit; transition: color .15s;
+  }
+  .policy-close:hover { color: var(--white); }
+  .policy-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #666; }
+  .policy-box h2 { font-size: 30px; font-weight: 900; font-style: italic; text-transform: uppercase; line-height: 1.05; letter-spacing: -0.5px; margin-top: -16px; }
+  .policy-divider { height: 1px; background: var(--rule); }
+  .policy-block { display: flex; flex-direction: column; gap: 10px; }
+  .policy-block h3 { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #888; }
+  .policy-block p { font-size: 14px; font-weight: 300; color: #ccc; line-height: 1.8; }
+  .policy-block a { color: var(--white); }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 60px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--white); color: var(--black);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 14px 28px; z-index: 900;
+    opacity: 0; transition: opacity .25s ease, transform .25s ease;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── MOCKUP BADGE ── */
+  .mockup-badge {
+    position: fixed; bottom: 16px; left: 16px;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: #333; z-index: 999; pointer-events: none;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 860px) {
+    nav { padding: 0 20px; height: 54px; }
+    .nav-links a { display: none; }
+    .nav-logo { font-size: 11px; letter-spacing: 3px; }
+    .hamburger { display: flex; }
+
+    .page-header { padding: 54px 16px 0; flex-direction: column; gap: 0; align-items: flex-start; }
+    .page-header-left { padding-top: 32px; padding-bottom: 24px; }
+    .catalog-filters { border-left: none; border-top: 1px solid var(--rule); align-self: stretch; }
+    .filter-btn { padding: 14px 16px; font-size: 9px; }
+
+    .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .card-name { font-size: 12px; }
+    .card-sub { font-size: 10px; }
+    .card-price { font-size: 14px; }
+    .card-body { padding: 16px; }
+
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+    footer { padding: 60px 20px 32px; }
+
+    .modal {
+      display: flex; flex-direction: column;
+      width: 100%; max-width: 100vw;
+      max-height: 92vh; overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      border-left: none; border-right: none;
+      border-radius: 0; align-self: flex-end;
+    }
+    .modal-img-panel { flex-shrink: 0; border-right: none; border-bottom: 1px solid var(--rule); }
+    .modal-img-wrap { height: 72vw; min-height: 0; padding: 0; overflow: hidden; }
+    .modal-img-wrap img { width: 100%; height: 100%; object-fit: cover; max-height: none; }
+    .modal-details { flex-shrink: 0; padding: 28px 20px 48px; overflow-y: visible; gap: 16px; }
+    .modal-name { font-size: 22px; }
+    .modal-overlay { align-items: flex-end; }
+    .size-overlay { padding: 28px 20px; }
+
+    .cart-drawer { width: 100%; }
+    .cart-head { padding: 20px; }
+    .cart-items { padding: 16px 20px; }
+    .cart-foot { padding: 16px 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .catalog-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .modal-img-wrap { height: 80vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a class="nav-logo" href="index.html">Heavy Metal Cheer Gym</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="catalog.html" class="nav-active">Shop</a>
+    <a href="index.html#hoodies">Hoodies</a>
+    <a href="index.html#story">Our Story</a>
+    <a href="#" onclick="openContact(event)">Contact</a>
+    <div class="nav-cart" id="navCart" onclick="openCart()" style="cursor:pointer;">Cart (0)</div>
+  </div>
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="closeMobileNav()">Home</a>
+  <a href="catalog.html" onclick="closeMobileNav()">Shop All</a>
+  <a href="index.html#hoodies" onclick="closeMobileNav()">Hoodies</a>
+  <a href="index.html#story" onclick="closeMobileNav()">Our Story</a>
+  <a href="#" onclick="openContact(event);closeMobileNav()">Contact</a>
+  <div class="mobile-nav-cart" onclick="openCart();closeMobileNav()">Cart</div>
+</div>
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="page-header-left">
+    <span class="page-header-eyebrow">Heavy Metal Cheer Gym</span>
+    <h1>Drop 01</h1>
+  </div>
+  <div class="catalog-filters">
+    <button class="filter-btn filter-active" data-filter="all" onclick="filterCatalog(this)">All · 10</button>
+    <button class="filter-btn" data-filter="tee" onclick="filterCatalog(this)">T-Shirts · $45</button>
+    <button class="filter-btn" data-filter="hoodie" onclick="filterCatalog(this)">Hoodies · $115</button>
+  </div>
+</div>
+
+<!-- Catalog Grid -->
+<div class="catalog-grid" id="catalogGrid" style="border-top:1px solid var(--rule);">
+
+  <div class="card" data-product="Misfits Cheerleader" data-type="tee">
+    <div class="card-img" style="background:#0a0a0a;">
+      <div class="card-new">New</div>
+      <img src="HMCG-Designs/misfits-cheerleader.png" alt="Misfits Cheerleader Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+      <img src="HMCG-Designs/misfits-cheerleader2.png" alt="" class="secondary" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <div class="card-name">Misfits Cheerleader</div>
+        <div class="card-sub">Comfort Colors 1717 · Black</div>
+      </div>
+      <div class="card-price">$45</div>
+    </div>
+  </div>
+
+  <div class="card" data-product="Four Bars" data-type="tee">
+    <div class="card-img" style="background:#0a0a0a;">
+      <div class="card-new">New</div>
+      <img src="HMCG-Designs/black-flag-bars.png" alt="Four Bars Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+      <img src="HMCG-Designs/black-flag-bars3.png" alt="" class="secondary" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <div class="card-name">Four Bars</div>
+        <div class="card-sub">Comfort Colors 1717 · Black</div>
+      </div>
+      <div class="card-price">$45</div>
+    </div>
+  </div>
+
+  <div class="card" data-product="The Iron Maidens" data-type="tee">
+    <div class="card-img" style="background:#0a0a0a;">
+      <div class="card-new">New</div>
+      <img src="HMCG-Designs/iron-maidens.png" alt="The Iron Maidens Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+      <img src="HMCG-Designs/iron-maidens2.png" alt="" class="secondary" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <div class="card-name">The Iron Maidens</div>
+        <div class="card-sub">Comfort Colors 1717 · Black</div>
+      </div>
+      <div class="card-price">$45</div>
+    </div>
+  </div>
+
+  <div class="card" data-product="Heavy Badge" data-type="tee">
+    <div class="card-img" style="background:#0a0a0a;">
+      <div class="card-new">New</div>
+      <img src="HMCG-Designs/harley-badge.png" alt="Heavy Badge Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+      <img src="HMCG-Designs/harley-badge2.png" alt="" class="secondary" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <div class="card-name">Heavy Badge</div>
+        <div class="card-sub">Comfort Colors 1717 · Black</div>
+      </div>
+      <div class="card-price">$45</div>
+    </div>
+  </div>
+
+  <div class="card" data-product="Winged Skull" data-type="tee">
+    <div class="card-img" style="background:#f5f0e8;">
+      <div class="card-new">New</div>
+      <img src="HMCG-Designs/winged-skull.png" alt="Winged Skull Tee" class="primary" style="width:85%;height:85%;object-fit:contain;" onerror="this.style.display='none'">
+      <img src="HMCG-Designs/winged-skull2.png" alt="" class="secondary" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <div class="card-name">Winged Skull</div>
+        <div class="card-sub">Comfort Colors 1717 · Bone</div>
+      </div>
+      <div class="card-price">$45</div>
+    </div>
+  </div>
+
+  <div class="card" data-product="Misfits Cheerleader Hoodie" data-type="hoodie">
+    <div class="card-img" style="background:#0a0a0a;">
+      <div class="card-new">New</div>
+      <img src="HMCG-Designs/misfits-cheerleader-hoodie.png" alt="Misfits Cheerleader Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <img src="HMCG-Designs/misfits-cheerleader-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <div class="card-name">Misfits Cheerleader</div>
+        <div class="card-sub">Comfort Colors 1567 · Black</div>
+      </div>
+      <div class="card-price">$115</div>
+    </div>
+  </div>
+
+  <div class="card" data-product="Four Bars Hoodie" data-type="hoodie">
+    <div class="card-img" style="background:#0a0a0a;">
+      <div class="card-new">New</div>
+      <img src="HMCG-Designs/black-flag-bars-hoodie.png" alt="Four Bars Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <img src="HMCG-Designs/black-flag-bars-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <div class="card-name">Four Bars</div>
+        <div class="card-sub">Comfort Colors 1567 · Black</div>
+      </div>
+      <div class="card-price">$115</div>
+    </div>
+  </div>
+
+  <div class="card" data-product="The Iron Maidens Hoodie" data-type="hoodie">
+    <div class="card-img" style="background:#0a0a0a;">
+      <div class="card-new">New</div>
+      <img src="HMCG-Designs/iron-maidens-hoodie.png" alt="The Iron Maidens Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <img src="HMCG-Designs/iron-maidens-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <div class="card-name">The Iron Maidens</div>
+        <div class="card-sub">Comfort Colors 1567 · Black</div>
+      </div>
+      <div class="card-price">$115</div>
+    </div>
+  </div>
+
+  <div class="card" data-product="Heavy Badge Hoodie" data-type="hoodie">
+    <div class="card-img" style="background:#0a0a0a;">
+      <div class="card-new">New</div>
+      <img src="HMCG-Designs/harley-badge-hoodie.png" alt="Heavy Badge Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <img src="HMCG-Designs/harley-badge-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <div class="card-name">Heavy Badge</div>
+        <div class="card-sub">Comfort Colors 1567 · Black</div>
+      </div>
+      <div class="card-price">$115</div>
+    </div>
+  </div>
+
+  <div class="card" data-product="Winged Skull Hoodie" data-type="hoodie">
+    <div class="card-img" style="background:#f5f0e8;">
+      <div class="card-new">New</div>
+      <img src="HMCG-Designs/winged-skull-hoodie.png" alt="Winged Skull Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <img src="HMCG-Designs/winged-skull-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <div class="card-name">Winged Skull</div>
+        <div class="card-sub">Comfort Colors 1567 · Bone</div>
+      </div>
+      <div class="card-price">$115</div>
+    </div>
+  </div>
+
+</div><!-- /catalog-grid -->
+
+<!-- Footer -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <span class="footer-logo">Heavy Metal Cheer Gym</span>
+      <p class="footer-about">Heavy Metal Cheer Gym<br><br>Heavymetalcheergym@gmail.com</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="catalog.html">All Products</a>
+      <a href="catalog.html#tee">T-Shirts</a>
+      <a href="catalog.html#hoodie">Hoodies</a>
+      <a href="index.html#hoodies">Hats — Coming Soon</a>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <a href="index.html#story">Our Story</a>
+      <a href="#" onclick="openSizeGuideOverlay();return false;">Sizing Guide</a>
+      <a href="#" onclick="openShipping();return false;">Shipping</a>
+      <a href="#" onclick="openReturns();return false;">Returns</a>
+    </div>
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <a href="https://instagram.com/heavymetalcheergym" target="_blank">Instagram</a>
+      <a href="https://instagram.com/heavymetalcheergym" target="_blank">TikTok — Coming Soon</a>
+      <a href="https://instagram.com/heavymetalcheergym" target="_blank">Facebook — Coming Soon</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Heavy Metal Cheer Gym</span>
+    <span>Powered by Shopify</span>
+  </div>
+</footer>
+
+<!-- Shipping Modal -->
+<div class="policy-overlay" id="shippingOverlay" onclick="if(event.target===this)closeShipping()">
+  <div class="policy-box">
+    <button class="policy-close" onclick="closeShipping()">✕</button>
+    <div class="policy-eyebrow">Heavy Metal Cheer Gym</div>
+    <h2>Shipping.</h2>
+    <div class="policy-divider"></div>
+    <div class="policy-block">
+      <h3>Free Shipping</h3>
+      <p>All orders over $75 ship free within the United States. No code needed — applied automatically at checkout.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Production Time</h3>
+      <p>Every HMCG item is made to order. Production takes 5–7 business days before your order ships. We don't keep inventory — your shirt is printed when you order it.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Delivery</h3>
+      <p>Standard shipping delivers in 5–7 business days after production. Expedited options are available at checkout. Total time from order to door: approximately 10–14 business days.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Tracking</h3>
+      <p>You'll receive a shipping confirmation email with a tracking number as soon as your order leaves the facility.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Availability</h3>
+      <p>We currently ship within the United States only. International shipping coming in Drop 02.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Returns Modal -->
+<div class="policy-overlay" id="returnsOverlay" onclick="if(event.target===this)closeReturns()">
+  <div class="policy-box">
+    <button class="policy-close" onclick="closeReturns()">✕</button>
+    <div class="policy-eyebrow">Heavy Metal Cheer Gym</div>
+    <h2>Returns.</h2>
+    <div class="policy-divider"></div>
+    <div class="policy-block">
+      <h3>Made to Order</h3>
+      <p>Because every HMCG item is printed specifically for you, we don't accept returns or exchanges for size or preference. We strongly recommend checking the sizing guide before ordering.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Defects & Damage</h3>
+      <p>If your order arrives damaged, misprinted, or with a manufacturing defect, we'll make it right. Contact us within 30 days of delivery with a photo of the issue and we'll send a replacement at no charge.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Wrong Item</h3>
+      <p>If you received the wrong product, contact us immediately. We'll ship the correct item and arrange return of the wrong one.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Contact</h3>
+      <p>For all order issues: <a href="mailto:Heavymetalcheergym@gmail.com">Heavymetalcheergym@gmail.com</a>. Include your order number and a photo where relevant. We respond within 24–48 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Standalone Sizing Guide -->
+<div class="policy-overlay" id="sizeGuideOverlay" onclick="if(event.target===this)closeSizeGuideOverlay()">
+  <div class="policy-box">
+    <button class="policy-close" onclick="closeSizeGuideOverlay()">✕</button>
+    <div class="policy-eyebrow">Heavy Metal Cheer Gym</div>
+    <h2>Size Guide.</h2>
+    <div class="policy-divider"></div>
+    <div class="policy-block">
+      <h3>Comfort Colors 1717 — T-Shirts</h3>
+      <table class="size-table">
+        <thead><tr><th>Size</th><th>Chest (in)</th><th>Body Length (in)</th><th>Sleeve (in)</th></tr></thead>
+        <tbody>
+          <tr><td>S</td><td>18</td><td>28</td><td>8.5</td></tr>
+          <tr><td>M</td><td>20</td><td>29</td><td>9</td></tr>
+          <tr><td>L</td><td>22</td><td>30</td><td>9.5</td></tr>
+          <tr><td>XL</td><td>24</td><td>31</td><td>10</td></tr>
+          <tr><td>2XL</td><td>26</td><td>32</td><td>10.5</td></tr>
+        </tbody>
+      </table>
+      <p class="size-note">Relaxed, slightly boxy fit. Measurements are of the garment laid flat. When in doubt, size down for women's; true to size for men's.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Comfort Colors 1567 — Hoodies</h3>
+      <table class="size-table">
+        <thead><tr><th>Size</th><th>Chest (in)</th><th>Body Length (in)</th><th>Sleeve (in)</th></tr></thead>
+        <tbody>
+          <tr><td>S</td><td>20</td><td>27</td><td>25</td></tr>
+          <tr><td>M</td><td>22</td><td>28</td><td>26</td></tr>
+          <tr><td>L</td><td>24</td><td>29</td><td>27</td></tr>
+          <tr><td>XL</td><td>26</td><td>30</td><td>28</td></tr>
+          <tr><td>2XL</td><td>28</td><td>31</td><td>29</td></tr>
+        </tbody>
+      </table>
+      <p class="size-note">Garment-dyed, slightly relaxed fit. Women's typically size up one for an oversized look; true to size for a fitted feel.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-backdrop" id="cartBackdrop" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <span>Your Cart</span>
+    <button onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <p class="cart-empty">Your cart is empty.</p>
+  </div>
+  <div class="cart-foot">
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span id="cartSubtotal">$0</span>
+    </div>
+    <button class="cart-checkout" onclick="addToCartToast()">Proceed to Checkout</button>
+    <p class="cart-note">Shipping calculated at checkout · Free over $75</p>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div class="contact-overlay" id="contactOverlay" onclick="closeContactOutside(event)">
+  <div class="contact-box">
+    <button class="contact-close" onclick="closeContact()">✕</button>
+    <div class="contact-label">Heavy Metal Cheer Gym</div>
+    <h2>Get In Touch.</h2>
+    <div class="contact-divider"></div>
+    <div class="contact-row">
+      <div class="contact-row-label">Email</div>
+      <a class="contact-row-val" href="mailto:Heavymetalcheergym@gmail.com">Heavymetalcheergym@gmail.com</a>
+    </div>
+    <div class="contact-row">
+      <div class="contact-row-label">Instagram</div>
+      <a class="contact-row-val" href="https://instagram.com/heavymetalcheergym" target="_blank">@heavymetalcheergym</a>
+    </div>
+    <div class="contact-row">
+      <div class="contact-row-label">Response Time</div>
+      <span class="contact-row-val" style="color:#888;">Within 24–48 hours</span>
+    </div>
+  </div>
+</div>
+
+<div class="mockup-badge">Mockup v3 — Not Live</div>
+
+<!-- Product Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-img-panel">
+      <div class="modal-img-wrap" id="modalImgWrap">
+        <img id="modalImg" src="" alt="" />
+        <button class="car-btn car-prev" onclick="carouselNav(-1)">&#8249;</button>
+        <button class="car-btn car-next" onclick="carouselNav(1)">&#8250;</button>
+      </div>
+      <div class="car-dots" id="carDots"></div>
+    </div>
+    <div class="modal-details">
+      <div class="modal-eyebrow">Heavy Metal Cheer Gym · Drop 01</div>
+      <h2 class="modal-name" id="modalName"></h2>
+      <div class="modal-material" id="modalMaterial"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-divider"></div>
+      <div class="modal-size-label">Select Size</div>
+      <div class="modal-gender">
+        <button class="gender-btn gender-active" onclick="pickGender(this,'W')">Women's</button>
+        <button class="gender-btn" onclick="pickGender(this,'M')">Men's</button>
+      </div>
+      <div class="gender-note" id="genderNote">Women's — size up one for a relaxed fit</div>
+      <div class="modal-sizes">
+        <button class="sz" onclick="pickSize(this)">S</button>
+        <button class="sz" onclick="pickSize(this)">M</button>
+        <button class="sz sz-active" onclick="pickSize(this)">L</button>
+        <button class="sz" onclick="pickSize(this)">XL</button>
+        <button class="sz" onclick="pickSize(this)">2XL</button>
+      </div>
+      <div class="modal-stock">In stock · Ships in 5–7 business days</div>
+      <button class="modal-add" id="modalAdd" onclick="addToCart()"></button>
+      <button class="modal-guide" onclick="openSizeGuide()">Sizing Guide →</button>
+    </div>
+    <div class="size-overlay" id="sizeOverlay">
+      <button class="sz-close" onclick="closeSizeGuide()">✕</button>
+      <h3>Comfort Colors 1717 — Size Guide</h3>
+      <table class="size-table">
+        <thead><tr><th>Size</th><th>Chest (in)</th><th>Body Length (in)</th><th>Sleeve (in)</th></tr></thead>
+        <tbody>
+          <tr><td>S</td><td>18</td><td>28</td><td>8.5</td></tr>
+          <tr><td>M</td><td>20</td><td>29</td><td>9</td></tr>
+          <tr><td>L</td><td>22</td><td>30</td><td>9.5</td></tr>
+          <tr><td>XL</td><td>24</td><td>31</td><td>10</td></tr>
+          <tr><td>2XL</td><td>26</td><td>32</td><td>10.5</td></tr>
+        </tbody>
+      </table>
+      <p class="size-note">Measurements are of the garment laid flat. Comfort Colors 1717 has a relaxed, slightly boxy fit. When in doubt, size down.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Added to Cart</div>
+
+<script>
+  /* ── CART ── */
+  let cart = [];
+
+  function updateCartCount() {
+    const total = cart.reduce((s, i) => s + i.qty, 0);
+    document.getElementById('navCart').textContent = `Cart (${total})`;
+  }
+
+  function renderCart() {
+    const el = document.getElementById('cartItems');
+    if (!cart.length) {
+      el.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
+      document.getElementById('cartSubtotal').textContent = '$0';
+      return;
+    }
+    el.innerHTML = cart.map((item, i) => `
+      <div class="cart-item">
+        <img src="${item.img}" class="cart-item-img" alt="${item.name}">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-meta">Size ${item.size} &nbsp;·&nbsp; ${item.price}</div>
+          <div class="cart-item-qty">
+            <button onclick="changeQty(${i},-1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${i},1)">+</button>
+          </div>
+        </div>
+        <button class="cart-item-remove" onclick="removeItem(${i})">✕</button>
+      </div>
+    `).join('');
+    const total = cart.reduce((s, i) => s + parseInt(i.price.replace('$','')) * i.qty, 0);
+    document.getElementById('cartSubtotal').textContent = '$' + total;
+  }
+
+  function changeQty(i, delta) {
+    cart[i].qty += delta;
+    if (cart[i].qty <= 0) cart.splice(i, 1);
+    updateCartCount(); renderCart();
+  }
+  function removeItem(i) {
+    cart.splice(i, 1);
+    updateCartCount(); renderCart();
+  }
+
+  /* ── FILTER (with URL hash support) ── */
+  function filterCatalog(btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('filter-active'));
+    btn.classList.add('filter-active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('#catalogGrid .card').forEach(card => {
+      card.style.display = (f === 'all' || card.dataset.type === f) ? '' : 'none';
+    });
+  }
+
+  /* Pre-apply filter from URL hash: catalog.html#tee or catalog.html#hoodie */
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = location.hash.replace('#', '');
+    if (hash === 'tee' || hash === 'hoodie') {
+      const btn = document.querySelector(`[data-filter="${hash}"]`);
+      if (btn) filterCatalog(btn);
+    }
+  });
+
+  /* ── MOBILE NAV ── */
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+    document.getElementById('hamburgerBtn').classList.toggle('active');
+  }
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('hamburgerBtn').classList.remove('active');
+  }
+
+  /* ── OVERLAYS ── */
+  function openSizeGuideOverlay() { document.getElementById('sizeGuideOverlay').classList.add('open'); }
+  function closeSizeGuideOverlay() { document.getElementById('sizeGuideOverlay').classList.remove('open'); }
+  function openShipping() { document.getElementById('shippingOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeShipping() { document.getElementById('shippingOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+  function openReturns() { document.getElementById('returnsOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeReturns() { document.getElementById('returnsOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+  function openCart() { renderCart(); document.getElementById('cartDrawer').classList.add('open'); document.getElementById('cartBackdrop').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeCart() { document.getElementById('cartDrawer').classList.remove('open'); document.getElementById('cartBackdrop').classList.remove('open'); document.body.style.overflow = ''; }
+  function openContact(e) { if (e) e.preventDefault(); document.getElementById('contactOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeContact() { document.getElementById('contactOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+  function closeContactOutside(e) { if (e.target === document.getElementById('contactOverlay')) closeContact(); }
+
+  /* ── PRODUCT DATA ── */
+  const D = 'HMCG-Designs/';
+  const products = {
+    'Misfits Cheerleader Hoodie': {
+      images: [D+'misfits-cheerleader-hoodie.png', D+'misfits-cheerleader-hoodie2.png',
+               D+'misfits-cheerleader-hoodie4.png',
+               D+'misfits-cheerleader-hoodie5.png', D+'misfits-cheerleader-hoodie6.png'],
+      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
+    },
+    'Four Bars Hoodie': {
+      images: [D+'black-flag-bars-hoodie.png', D+'black-flag-bars-hoodie2.png',
+               D+'black-flag-bars-hoodie4.png',
+               D+'black-flag-bars-hoodie5.png',
+               D+'HMCG-brand-wide-lifestyle-hoodie-shot.png'],
+      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
+    },
+    'The Iron Maidens Hoodie': {
+      images: [D+'iron-maidens-hoodie.png', D+'iron-maidens-hoodie2.png',
+               D+'iron-maidens-hoodie3.png', D+'iron-maidens-hoodie4.png',
+               D+'HMCG-brand-wide-lifestyle-hoodie-shot2.png'],
+      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
+    },
+    'Heavy Badge Hoodie': {
+      images: [D+'harley-badge-hoodie.png', D+'harley-badge-hoodie2.png',
+               D+'harley-badge-hoodie3.png', D+'harley-badge-hoodie4.png'],
+      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
+    },
+    'Winged Skull Hoodie': {
+      images: [D+'winged-skull-hoodie.png', D+'winged-skull-hoodie2.png'],
+      material: 'Comfort Colors 1567 · Bone', price: '$115', bg: '#f5f0e8', fit: 'cover'
+    },
+    'Misfits Cheerleader': {
+      images: [D+'misfits-cheerleader.png', D+'misfits-cheerleader2.png'],
+      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
+    },
+    'Four Bars': {
+      images: [D+'black-flag-bars.png', D+'black-flag-bars3.png'],
+      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
+    },
+    'The Iron Maidens': {
+      images: [D+'iron-maidens.png', D+'iron-maidens2.png', D+'iron-maidens4.png'],
+      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
+    },
+    'Heavy Badge': {
+      images: [D+'harley-badge.png', D+'harley-badge2.png'],
+      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
+    },
+    'Winged Skull': {
+      images: [D+'winged-skull.png', D+'winged-skull2.png'],
+      material: 'Comfort Colors 1717 · Bone', price: '$45', bg: '#f5f0e8', fit: 'contain'
+    }
+  };
+
+  let current = null;
+  let currentName = '';
+  let currentImgIdx = 0;
+  let currentGender = 'W';
+
+  document.querySelectorAll('.card').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const name = card.dataset.product;
+      openModal(name);
+    });
+  });
+
+  function openModal(name) {
+    const p = products[name];
+    if (!p) return;
+    current = p; currentName = name; currentImgIdx = 0;
+    document.getElementById('modalName').textContent = name;
+    document.getElementById('modalMaterial').textContent = p.material;
+    document.getElementById('modalPrice').textContent = p.price;
+    document.getElementById('modalAdd').textContent = 'Add to Cart — ' + p.price;
+    document.getElementById('modalImgWrap').style.background = p.bg;
+    renderCarousel();
+    currentGender = 'W';
+    document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('gender-active'));
+    document.querySelectorAll('.gender-btn')[0].classList.add('gender-active');
+    document.getElementById('genderNote').textContent = "Women's — size up one for a relaxed fit";
+    document.querySelectorAll('.sz').forEach(b => b.classList.remove('sz-active'));
+    document.querySelectorAll('.sz')[2].classList.add('sz-active');
+    document.getElementById('sizeOverlay').classList.remove('open');
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function renderCarousel() {
+    if (!current) return;
+    const imgs = current.images;
+    const img = document.getElementById('modalImg');
+    img.src = imgs[currentImgIdx];
+    img.style.objectFit = currentImgIdx === 0 ? current.fit : 'cover';
+    const showNav = imgs.length > 1;
+    document.querySelector('.car-prev').style.display = showNav ? 'flex' : 'none';
+    document.querySelector('.car-next').style.display = showNav ? 'flex' : 'none';
+    document.getElementById('carDots').innerHTML = imgs.map((_, i) =>
+      `<button class="car-dot${i === currentImgIdx ? ' dot-active' : ''}" onclick="goToImg(${i})"></button>`
+    ).join('');
+  }
+
+  function pickGender(el, g) {
+    document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('gender-active'));
+    el.classList.add('gender-active');
+    currentGender = g;
+    document.getElementById('genderNote').textContent =
+      g === 'W' ? "Women's — size up one for a relaxed fit" : "Men's — true to size";
+  }
+
+  function carouselNav(dir) {
+    if (!current) return;
+    currentImgIdx = (currentImgIdx + dir + current.images.length) % current.images.length;
+    renderCarousel();
+  }
+
+  function goToImg(i) { currentImgIdx = i; renderCarousel(); }
+
+  let _tx = 0;
+  document.getElementById('modalImgWrap').addEventListener('touchstart', e => { _tx = e.touches[0].clientX; }, {passive:true});
+  document.getElementById('modalImgWrap').addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - _tx;
+    if (Math.abs(dx) > 44) carouselNav(dx < 0 ? 1 : -1);
+  }, {passive:true});
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    closeModal(); closeCart(); closeContact(); closeShipping(); closeReturns(); closeSizeGuide(); closeSizeGuideOverlay(); closeMobileNav();
+  });
+
+  function pickSize(btn) {
+    document.querySelectorAll('.sz').forEach(b => b.classList.remove('sz-active'));
+    btn.classList.add('sz-active');
+  }
+
+  function addToCart() {
+    if (!current) return;
+    const size = document.querySelector('.sz.sz-active')?.textContent?.trim() || 'L';
+    const sizeLabel = currentGender + ' · ' + size;
+    const existing = cart.find(i => i.name === currentName && i.size === sizeLabel);
+    if (existing) { existing.qty++; } else {
+      cart.push({ name: currentName, size: sizeLabel, price: current.price, img: current.images[0], qty: 1 });
+    }
+    updateCartCount(); renderCart();
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartBackdrop').classList.add('open');
+  }
+
+  function addToCartToast() {
+    const toast = document.getElementById('toast');
+    toast.textContent = 'This is a mockup — checkout coming soon.';
+    toast.classList.add('show');
+    setTimeout(() => { toast.classList.remove('show'); toast.textContent = 'Added to Cart'; }, 3000);
+  }
+
+  function openSizeGuide() { document.getElementById('sizeOverlay').classList.add('open'); }
+  function closeSizeGuide() { document.getElementById('sizeOverlay').classList.remove('open'); }
+</script>
+</body>
+</html>
