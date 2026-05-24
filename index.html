@@ -901,6 +901,103 @@
   }
   .contact-row-val:hover { color: #aaa; }
 
+  /* ── OUR STORY EXPANDED ── */
+  .story-expanded {
+    padding: 100px 48px;
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .story-left .story-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 5px; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 32px;
+    display: block;
+  }
+  .story-left h2 {
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 900; font-style: italic;
+    text-transform: uppercase; line-height: 1.05;
+    letter-spacing: -1px; margin-bottom: 40px;
+  }
+  .story-left p {
+    font-size: 15px; font-weight: 300;
+    line-height: 1.9; color: var(--dim);
+    margin-bottom: 24px;
+  }
+  .story-right {
+    padding-top: 52px;
+    display: flex; flex-direction: column; gap: 40px;
+    border-left: 1px solid var(--rule);
+    padding-left: 80px;
+  }
+  .story-pillar {}
+  .story-pillar-num {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 4px; color: var(--dim);
+    margin-bottom: 12px; display: block;
+  }
+  .story-pillar h3 {
+    font-size: 16px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .story-pillar p {
+    font-size: 13px; font-weight: 300;
+    color: var(--dim); line-height: 1.8;
+  }
+
+  /* ── POLICY MODALS ── */
+  .policy-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.92);
+    backdrop-filter: blur(14px);
+    z-index: 500; display: flex;
+    align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .policy-overlay.open { opacity: 1; pointer-events: all; }
+  .policy-box {
+    background: #0a0a0a;
+    border: 1px solid var(--rule);
+    width: 640px; max-width: 94vw;
+    max-height: 82vh; overflow-y: auto;
+    padding: 56px 52px;
+    position: relative;
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .policy-close {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; color: #555;
+    font-size: 20px; cursor: pointer;
+    font-family: inherit; transition: color .15s;
+  }
+  .policy-close:hover { color: var(--white); }
+  .policy-eyebrow {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase; color: #666;
+  }
+  .policy-box h2 {
+    font-size: 30px; font-weight: 900;
+    font-style: italic; text-transform: uppercase;
+    line-height: 1.05; letter-spacing: -0.5px;
+    margin-top: -16px;
+  }
+  .policy-divider { height: 1px; background: var(--rule); }
+  .policy-block { display: flex; flex-direction: column; gap: 10px; }
+  .policy-block h3 {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase; color: #888;
+  }
+  .policy-block p {
+    font-size: 14px; font-weight: 300;
+    color: #ccc; line-height: 1.8;
+  }
+  .policy-block a { color: var(--white); }
+
   /* ── BADGE ── */
   .mockup-badge {
     position: fixed;
@@ -951,8 +1048,8 @@
 <!-- Ticker -->
 <div class="ticker">
   <div class="ticker-inner">
-    <b>HEAVY METAL CHEER GYM</b> &nbsp;·&nbsp; COMFORT COLORS 1717 &nbsp;·&nbsp; DROP 01 &nbsp;·&nbsp; FREE SHIPPING OVER $75 &nbsp;·&nbsp; NOT FOR EVERYONE &nbsp;·&nbsp;
-    <b>HEAVY METAL CHEER GYM</b> &nbsp;·&nbsp; COMFORT COLORS 1717 &nbsp;·&nbsp; DROP 01 &nbsp;·&nbsp; FREE SHIPPING OVER $75 &nbsp;·&nbsp; NOT FOR EVERYONE &nbsp;·&nbsp;
+    <b>HEAVY METAL CHEER GYM</b> &nbsp;·&nbsp; COMFORT COLORS 1717 TEES &nbsp;·&nbsp; COMFORT COLORS 1567 HOODIES &nbsp;·&nbsp; DROP 01 &nbsp;·&nbsp; FREE SHIPPING OVER $75 &nbsp;·&nbsp; NOT FOR EVERYONE &nbsp;·&nbsp;
+    <b>HEAVY METAL CHEER GYM</b> &nbsp;·&nbsp; COMFORT COLORS 1717 TEES &nbsp;·&nbsp; COMFORT COLORS 1567 HOODIES &nbsp;·&nbsp; DROP 01 &nbsp;·&nbsp; FREE SHIPPING OVER $75 &nbsp;·&nbsp; NOT FOR EVERYONE &nbsp;·&nbsp;
   </div>
 </div>
 
@@ -1043,12 +1140,123 @@
   </div>
 </section>
 
+<!-- Hoodies -->
+<section class="products" id="hoodies">
+  <div class="products-head">
+    <h2>Drop 01 — Hoodies</h2>
+    <span class="count">5 Designs · Comfort Colors 1567</span>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/misfits-cheerleader-hoodie.png" alt="Misfits Cheerleader Hoodie" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/misfits-cheerleader-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Misfits Cheerleader</div>
+          <div class="card-sub">Comfort Colors 1567 · Black</div>
+        </div>
+        <div class="card-price">$115</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/black-flag-bars-hoodie.png" alt="Four Bars Hoodie" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/black-flag-bars-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Four Bars</div>
+          <div class="card-sub">Comfort Colors 1567 · Black</div>
+        </div>
+        <div class="card-price">$115</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/iron-maidens-hoodie.png" alt="The Iron Maidens Hoodie" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/iron-maidens-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">The Iron Maidens</div>
+          <div class="card-sub">Comfort Colors 1567 · Black</div>
+        </div>
+        <div class="card-price">$115</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-row2">
+    <div class="card">
+      <div class="card-img" style="background:#0a0a0a;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/harley-badge-hoodie.png" alt="Heavy Badge Hoodie" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/harley-badge-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Heavy Badge</div>
+          <div class="card-sub">Comfort Colors 1567 · Black</div>
+        </div>
+        <div class="card-price">$115</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background:#f5f0e8;">
+        <div class="card-new">New</div>
+        <img src="HMCG-Designs/winged-skull-hoodie.png" alt="Winged Skull Hoodie" class="primary" style="width:85%;height:85%;object-fit:contain;" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/winged-skull-hoodie2.png" alt="" class="secondary" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-left">
+          <div class="card-name">Winged Skull</div>
+          <div class="card-sub">Comfort Colors 1567 · Bone</div>
+        </div>
+        <div class="card-price">$115</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Statement Section -->
 <section class="statement" id="story">
   <h2>Born in the pit.  Raised on the mat.</h2>
   <div class="statement-right">
     <p>We're a cheer gym run by people who grew up on Maiden and Metallica. Our athletes are tough, loud, and proud. Our gear matches.</p>
     <a href="#" class="btn-black">About the Gym</a>
+  </div>
+</section>
+
+<!-- Our Story Expanded -->
+<section class="story-expanded">
+  <div class="story-left">
+    <span class="story-label">Our Story</span>
+    <h2>We Didn't Start a Gym to Blend In.</h2>
+    <p>Heavy Metal Cheer Gym started with a simple observation: the cheer world had a uniform. Not the one the athletes wore — the one the adults wore. Matching spirit wear, team colors, rhinestone fonts. Safe. Forgettable.</p>
+    <p>We grew up differently. Raised on Maiden and Metallica. More shows than recitals. We didn't stop loving that world when our kids found cheer — we just brought it with us.</p>
+    <p>HMCG is for every parent who felt out of place in the stands. Every athlete who wanted something that actually felt like them. Every family that shows up loud, proud, and wearing black.</p>
+    <p>Comfort Colors 1717 tees. Comfort Colors 1567 hoodies. Garment-dyed, soft, built to last. Not for everyone. Definitely for you.</p>
+  </div>
+  <div class="story-right">
+    <div class="story-pillar">
+      <span class="story-pillar-num">01</span>
+      <h3>The Athlete</h3>
+      <p>All-Star competitors who are done looking like every other team in the field. HMCG gear is what you wear before and after the mat — identity, not spirit wear.</p>
+    </div>
+    <div class="story-pillar">
+      <span class="story-pillar-num">02</span>
+      <h3>The Parent</h3>
+      <p>The dad who's been to more Slayer shows than dance recitals. The mom who wants something she'd actually wear on a Friday night. Both found their section of the stands.</p>
+    </div>
+    <div class="story-pillar">
+      <span class="story-pillar-num">03</span>
+      <h3>The Sound</h3>
+      <p>Heavy metal never asked for permission. Neither did we. The music shaped the brand — the attitude, the volume, the refusal to apologize for taking up space.</p>
+    </div>
   </div>
 </section>
 
@@ -1061,23 +1269,23 @@
     </div>
     <div class="footer-col">
       <h4>Shop</h4>
-      <a href="#">All Products</a>
-      <a href="#">T-Shirts</a>
-      <a href="#">Hoodies</a>
-      <a href="#">Accessories</a>
+      <a href="#drop01">All Products</a>
+      <a href="#drop01">T-Shirts</a>
+      <a href="#hoodies">Hoodies</a>
+      <a href="#hoodies">Hats — Coming Soon</a>
     </div>
     <div class="footer-col">
       <h4>Info</h4>
-      <a href="#">Our Story</a>
-      <a href="#">Sizing Guide</a>
-      <a href="#">Shipping</a>
-      <a href="#">Returns</a>
+      <a href="#story">Our Story</a>
+      <a href="#" onclick="openSizeGuide();return false;">Sizing Guide</a>
+      <a href="#" onclick="openShipping();return false;">Shipping</a>
+      <a href="#" onclick="openReturns();return false;">Returns</a>
     </div>
     <div class="footer-col">
       <h4>Follow</h4>
-      <a href="#">Instagram</a>
-      <a href="#">TikTok</a>
-      <a href="#">Facebook</a>
+      <a href="https://instagram.com/heavymetalcheergym" target="_blank">Instagram</a>
+      <a href="https://instagram.com/heavymetalcheergym" target="_blank">TikTok — Coming Soon</a>
+      <a href="https://instagram.com/heavymetalcheergym" target="_blank">Facebook — Coming Soon</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -1085,6 +1293,62 @@
     <span>Powered by Shopify</span>
   </div>
 </footer>
+
+<!-- Shipping Modal -->
+<div class="policy-overlay" id="shippingOverlay" onclick="if(event.target===this)closeShipping()">
+  <div class="policy-box">
+    <button class="policy-close" onclick="closeShipping()">✕</button>
+    <div class="policy-eyebrow">Heavy Metal Cheer Gym</div>
+    <h2>Shipping.</h2>
+    <div class="policy-divider"></div>
+    <div class="policy-block">
+      <h3>Free Shipping</h3>
+      <p>All orders over $75 ship free within the United States. No code needed — applied automatically at checkout.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Production Time</h3>
+      <p>Every HMCG item is made to order. Production takes 5–7 business days before your order ships. We don't keep inventory — your shirt is printed when you order it.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Delivery</h3>
+      <p>Standard shipping delivers in 5–7 business days after production. Expedited options are available at checkout. Total time from order to door: approximately 10–14 business days.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Tracking</h3>
+      <p>You'll receive a shipping confirmation email with a tracking number as soon as your order leaves the facility.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Availability</h3>
+      <p>We currently ship within the United States only. International shipping coming in Drop 02.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Returns Modal -->
+<div class="policy-overlay" id="returnsOverlay" onclick="if(event.target===this)closeReturns()">
+  <div class="policy-box">
+    <button class="policy-close" onclick="closeReturns()">✕</button>
+    <div class="policy-eyebrow">Heavy Metal Cheer Gym</div>
+    <h2>Returns.</h2>
+    <div class="policy-divider"></div>
+    <div class="policy-block">
+      <h3>Made to Order</h3>
+      <p>Because every HMCG item is printed specifically for you, we don't accept returns or exchanges for size or preference. We strongly recommend checking the sizing guide before ordering.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Defects & Damage</h3>
+      <p>If your order arrives damaged, misprinted, or with a manufacturing defect, we'll make it right. Contact us within 30 days of delivery with a photo of the issue and we'll send a replacement at no charge.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Wrong Item</h3>
+      <p>If you received the wrong product, contact us immediately. We'll ship the correct item and arrange return of the wrong one.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Contact</h3>
+      <p>For all order issues: <a href="mailto:Heavymetalcheergym@gmail.com">Heavymetalcheergym@gmail.com</a>. Include your order number and a photo where relevant. We respond within 24–48 hours.</p>
+    </div>
+  </div>
+</div>
 
 <!-- Cart Drawer -->
 <div class="cart-backdrop" id="cartBackdrop" onclick="closeCart()"></div>
@@ -1266,8 +1530,66 @@
     if (e.target === document.getElementById('contactOverlay')) closeContact();
   }
 
+  /* ── SHIPPING / RETURNS ── */
+  function openShipping() {
+    document.getElementById('shippingOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeShipping() {
+    document.getElementById('shippingOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function openReturns() {
+    document.getElementById('returnsOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeReturns() {
+    document.getElementById('returnsOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
   /* ── PRODUCT DATA ── */
   const products = {
+    'Misfits Cheerleader Hoodie': {
+      design:    'HMCG-Designs/misfits-cheerleader-hoodie.png',
+      lifestyle: 'HMCG-Designs/misfits-cheerleader-hoodie2.png',
+      material:  'Comfort Colors 1567 · Black',
+      price:     '$115',
+      bg:        '#0a0a0a',
+      fit:       'contain'
+    },
+    'Four Bars Hoodie': {
+      design:    'HMCG-Designs/black-flag-bars-hoodie.png',
+      lifestyle: 'HMCG-Designs/black-flag-bars-hoodie2.png',
+      material:  'Comfort Colors 1567 · Black',
+      price:     '$115',
+      bg:        '#0a0a0a',
+      fit:       'contain'
+    },
+    'The Iron Maidens Hoodie': {
+      design:    'HMCG-Designs/iron-maidens-hoodie.png',
+      lifestyle: 'HMCG-Designs/iron-maidens-hoodie2.png',
+      material:  'Comfort Colors 1567 · Black',
+      price:     '$115',
+      bg:        '#0a0a0a',
+      fit:       'contain'
+    },
+    'Heavy Badge Hoodie': {
+      design:    'HMCG-Designs/harley-badge-hoodie.png',
+      lifestyle: 'HMCG-Designs/harley-badge-hoodie2.png',
+      material:  'Comfort Colors 1567 · Black',
+      price:     '$115',
+      bg:        '#0a0a0a',
+      fit:       'contain'
+    },
+    'Winged Skull Hoodie': {
+      design:    'HMCG-Designs/winged-skull-hoodie.png',
+      lifestyle: 'HMCG-Designs/winged-skull-hoodie2.png',
+      material:  'Comfort Colors 1567 · Bone',
+      price:     '$115',
+      bg:        '#f5f0e8',
+      fit:       'contain'
+    },
     'Misfits Cheerleader': {
       design:    'HMCG-Designs/misfits-cheerleader.png',
       lifestyle: 'HMCG-Designs/misfits-cheerleader2.png',
@@ -1353,7 +1675,13 @@
   });
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key !== 'Escape') return;
+    closeModal();
+    closeCart();
+    closeContact();
+    closeShipping();
+    closeReturns();
+    closeSizeGuide();
   });
 
   function setModalImg(type) {
