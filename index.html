@@ -14,6 +14,7 @@
     --off:   #111;
     --dim:   #aaa;
     --rule:  #1c1c1c;
+    --gap:   1px;
   }
 
   html { scroll-behavior: smooth; }
@@ -1107,6 +1108,10 @@
     /* Footer */
     .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
     footer { padding: 60px 20px 32px; }
+
+    .catalog-grid { grid-template-columns: repeat(3, 1fr); }
+    .catalog-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .filter-btn { padding: 10px 14px; font-size: 9px; }
   }
 
   @media (max-width: 480px) {
@@ -1115,6 +1120,7 @@
     .footer-top { grid-template-columns: 1fr; gap: 28px; }
     .modal-img-wrap { height: 80vw; }
     .hero-right { min-height: 80vw; }
+    .catalog-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* ── HAMBURGER + MOBILE NAV ── */
@@ -1165,6 +1171,75 @@
   .mobile-nav a:last-child, .mobile-nav-cart { border-bottom: none; }
   .mobile-nav.open { display: flex; }
 
+  /* ── CATALOG ── */
+  .catalog-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .catalog-filters {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--rule);
+  }
+  .filter-btn {
+    background: none;
+    border: none;
+    border-right: 1px solid var(--rule);
+    color: var(--dim);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    cursor: pointer;
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .filter-btn:last-child { border-right: none; }
+  .filter-btn:hover { color: var(--white); }
+  .filter-btn.filter-active { color: var(--white); background: var(--off); }
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--gap);
+  }
+
+  /* ── GENDER SELECTOR ── */
+  .modal-gender {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--rule);
+    align-self: flex-start;
+  }
+  .gender-btn {
+    background: none;
+    border: none;
+    border-right: 1px solid var(--rule);
+    color: var(--dim);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    cursor: pointer;
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: all .15s;
+  }
+  .gender-btn:last-child { border-right: none; }
+  .gender-btn:hover { color: var(--white); }
+  .gender-btn.gender-active { color: var(--white); background: var(--off); }
+  .gender-note {
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: -10px;
+  }
+
   /* ── BADGE ── */
   .mockup-badge {
     position: fixed;
@@ -1186,8 +1261,8 @@
 <nav>
   <div class="nav-logo">Heavy Metal Cheer Gym</div>
   <div class="nav-links">
-    <a href="#drop01">Catalog</a>
-    <a href="#hoodies">Hoodies</a>
+    <a href="#catalog">Catalog</a>
+    <a href="#catalog">Hoodies</a>
     <a href="#story">Our Story</a>
     <a href="#" onclick="openContact(event)">Contact</a>
     <div class="nav-cart" id="navCart" onclick="openCart()" style="cursor:pointer;">Cart (0)</div>
@@ -1197,8 +1272,8 @@
   </button>
 </nav>
 <div class="mobile-nav" id="mobileNav">
-  <a href="#drop01" onclick="closeMobileNav()">T-Shirts</a>
-  <a href="#hoodies" onclick="closeMobileNav()">Hoodies</a>
+  <a href="#catalog" onclick="closeMobileNav()">T-Shirts</a>
+  <a href="#catalog" onclick="closeMobileNav()">Hoodies</a>
   <a href="#story" onclick="closeMobileNav()">Our Story</a>
   <a href="#" onclick="openContact(event);closeMobileNav()">Contact</a>
   <div class="mobile-nav-cart" onclick="openCart();closeMobileNav()">Cart</div>
@@ -1212,7 +1287,7 @@
     </div>
     <div class="hero-bottom">
       <p class="hero-sub">Premium garment-dyed tees for cheer athletes who grew up on the heavy stuff.</p>
-      <a href="#" class="hero-cta">Shop Now</a>
+      <a href="#catalog" class="hero-cta">Shop Now</a>
     </div>
   </div>
   <div class="hero-right" style="background-image:url('HMCG-Designs/HMCG-brand-wide-mood-hoodie-shot2.png')">
@@ -1228,15 +1303,19 @@
   </div>
 </div>
 
-<!-- Products -->
-<section class="products" id="drop01">
-  <div class="products-head">
+<!-- Catalog -->
+<section class="products" id="catalog">
+  <div class="products-head catalog-head">
     <h2>Drop 01</h2>
-    <span class="count">5 Designs</span>
+    <div class="catalog-filters">
+      <button class="filter-btn filter-active" data-filter="all" onclick="filterCatalog(this)">All · 10</button>
+      <button class="filter-btn" data-filter="tee" onclick="filterCatalog(this)">T-Shirts · $45</button>
+      <button class="filter-btn" data-filter="hoodie" onclick="filterCatalog(this)">Hoodies · $115</button>
+    </div>
   </div>
+  <div class="catalog-grid" id="catalogGrid">
 
-  <div class="grid">
-    <div class="card" data-product="Misfits Cheerleader">
+    <div class="card" data-product="Misfits Cheerleader" data-type="tee">
       <div class="card-img" style="background:#0a0a0a;">
         <div class="card-new">New</div>
         <img src="HMCG-Designs/misfits-cheerleader.png" alt="Misfits Cheerleader Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
@@ -1251,11 +1330,11 @@
       </div>
     </div>
 
-    <div class="card" data-product="Four Bars">
+    <div class="card" data-product="Four Bars" data-type="tee">
       <div class="card-img" style="background:#0a0a0a;">
         <div class="card-new">New</div>
         <img src="HMCG-Designs/black-flag-bars.png" alt="Four Bars Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
-        <img src="HMCG-Designs/black-flag-bars2.png" alt="" class="secondary" onerror="this.style.display='none'">
+        <img src="HMCG-Designs/black-flag-bars3.png" alt="" class="secondary" onerror="this.style.display='none'">
       </div>
       <div class="card-body">
         <div class="card-left">
@@ -1266,7 +1345,7 @@
       </div>
     </div>
 
-    <div class="card" data-product="The Iron Maidens">
+    <div class="card" data-product="The Iron Maidens" data-type="tee">
       <div class="card-img" style="background:#0a0a0a;">
         <div class="card-new">New</div>
         <img src="HMCG-Designs/iron-maidens.png" alt="The Iron Maidens Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
@@ -1280,10 +1359,8 @@
         <div class="card-price">$45</div>
       </div>
     </div>
-  </div>
 
-  <div class="grid-row2">
-    <div class="card" data-product="Heavy Badge">
+    <div class="card" data-product="Heavy Badge" data-type="tee">
       <div class="card-img" style="background:#0a0a0a;">
         <div class="card-new">New</div>
         <img src="HMCG-Designs/harley-badge.png" alt="Heavy Badge Tee" class="primary" style="width:70%;height:70%;object-fit:contain;" onerror="this.style.display='none'">
@@ -1298,7 +1375,7 @@
       </div>
     </div>
 
-    <div class="card" data-product="Winged Skull">
+    <div class="card" data-product="Winged Skull" data-type="tee">
       <div class="card-img" style="background:#f5f0e8;">
         <div class="card-new">New</div>
         <img src="HMCG-Designs/winged-skull.png" alt="Winged Skull Tee" class="primary" style="width:85%;height:85%;object-fit:contain;" onerror="this.style.display='none'">
@@ -1312,17 +1389,8 @@
         <div class="card-price">$45</div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- Hoodies -->
-<section class="products" id="hoodies">
-  <div class="products-head">
-    <h2>Drop 01 — Hoodies</h2>
-    <span class="count">5 Designs · Comfort Colors 1567</span>
-  </div>
-  <div class="grid">
-    <div class="card" data-product="Misfits Cheerleader Hoodie">
+    <div class="card" data-product="Misfits Cheerleader Hoodie" data-type="hoodie">
       <div class="card-img" style="background:#0a0a0a;">
         <div class="card-new">New</div>
         <img src="HMCG-Designs/misfits-cheerleader-hoodie.png" alt="Misfits Cheerleader Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
@@ -1336,7 +1404,8 @@
         <div class="card-price">$115</div>
       </div>
     </div>
-    <div class="card" data-product="Four Bars Hoodie">
+
+    <div class="card" data-product="Four Bars Hoodie" data-type="hoodie">
       <div class="card-img" style="background:#0a0a0a;">
         <div class="card-new">New</div>
         <img src="HMCG-Designs/black-flag-bars-hoodie.png" alt="Four Bars Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
@@ -1350,7 +1419,8 @@
         <div class="card-price">$115</div>
       </div>
     </div>
-    <div class="card" data-product="The Iron Maidens Hoodie">
+
+    <div class="card" data-product="The Iron Maidens Hoodie" data-type="hoodie">
       <div class="card-img" style="background:#0a0a0a;">
         <div class="card-new">New</div>
         <img src="HMCG-Designs/iron-maidens-hoodie.png" alt="The Iron Maidens Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
@@ -1364,9 +1434,8 @@
         <div class="card-price">$115</div>
       </div>
     </div>
-  </div>
-  <div class="grid-row2">
-    <div class="card" data-product="Heavy Badge Hoodie">
+
+    <div class="card" data-product="Heavy Badge Hoodie" data-type="hoodie">
       <div class="card-img" style="background:#0a0a0a;">
         <div class="card-new">New</div>
         <img src="HMCG-Designs/harley-badge-hoodie.png" alt="Heavy Badge Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
@@ -1380,7 +1449,8 @@
         <div class="card-price">$115</div>
       </div>
     </div>
-    <div class="card" data-product="Winged Skull Hoodie">
+
+    <div class="card" data-product="Winged Skull Hoodie" data-type="hoodie">
       <div class="card-img" style="background:#f5f0e8;">
         <div class="card-new">New</div>
         <img src="HMCG-Designs/winged-skull-hoodie.png" alt="Winged Skull Hoodie" class="primary" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
@@ -1394,6 +1464,7 @@
         <div class="card-price">$115</div>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -1588,6 +1659,11 @@
       <div class="modal-price" id="modalPrice"></div>
       <div class="modal-divider"></div>
       <div class="modal-size-label">Select Size</div>
+      <div class="modal-gender">
+        <button class="gender-btn gender-active" onclick="pickGender(this,'W')">Women's</button>
+        <button class="gender-btn" onclick="pickGender(this,'M')">Men's</button>
+      </div>
+      <div class="gender-note" id="genderNote">Women's — size up one for a relaxed fit</div>
       <div class="modal-sizes">
         <button class="sz" onclick="pickSize(this)">S</button>
         <button class="sz" onclick="pickSize(this)">M</button>
@@ -1673,6 +1749,15 @@
     cart.splice(i, 1);
     updateCartCount();
     renderCart();
+  }
+
+  function filterCatalog(btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('filter-active'));
+    btn.classList.add('filter-active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('#catalogGrid .card').forEach(card => {
+      card.style.display = (f === 'all' || card.dataset.type === f) ? '' : 'none';
+    });
   }
 
   function toggleMobileNav() {
@@ -1795,6 +1880,7 @@
   let current = null;
   let currentName = '';
   let currentImgIdx = 0;
+  let currentGender = 'W';
 
   document.querySelectorAll('.card').forEach(card => {
     card.style.cursor = 'pointer';
@@ -1814,6 +1900,10 @@
     document.getElementById('modalAdd').textContent = 'Add to Cart — ' + p.price;
     document.getElementById('modalImgWrap').style.background = p.bg;
     renderCarousel();
+    currentGender = 'W';
+    document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('gender-active'));
+    document.querySelectorAll('.gender-btn')[0].classList.add('gender-active');
+    document.getElementById('genderNote').textContent = "Women's — size up one for a relaxed fit";
     document.querySelectorAll('.sz').forEach(b => b.classList.remove('sz-active'));
     document.querySelectorAll('.sz')[2].classList.add('sz-active');
     document.getElementById('sizeOverlay').classList.remove('open');
@@ -1833,6 +1923,14 @@
     document.getElementById('carDots').innerHTML = imgs.map((_, i) =>
       `<button class="car-dot${i === currentImgIdx ? ' dot-active' : ''}" onclick="goToImg(${i})"></button>`
     ).join('');
+  }
+
+  function pickGender(el, g) {
+    document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('gender-active'));
+    el.classList.add('gender-active');
+    currentGender = g;
+    document.getElementById('genderNote').textContent =
+      g === 'W' ? "Women's — size up one for a relaxed fit" : "Men's — true to size";
   }
 
   function carouselNav(dir) {
@@ -1873,11 +1971,12 @@
   function addToCart() {
     if (!current) return;
     const size = document.querySelector('.sz.sz-active')?.textContent?.trim() || 'L';
-    const existing = cart.find(i => i.name === currentName && i.size === size);
+    const sizeLabel = currentGender + ' · ' + size;
+    const existing = cart.find(i => i.name === currentName && i.size === sizeLabel);
     if (existing) {
       existing.qty++;
     } else {
-      cart.push({ name: currentName, size, price: current.price, img: current.images[0], qty: 1 });
+      cart.push({ name: currentName, size: sizeLabel, price: current.price, img: current.images[0], qty: 1 });
     }
     updateCartCount();
     renderCart();
