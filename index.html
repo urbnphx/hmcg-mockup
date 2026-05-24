@@ -1473,12 +1473,12 @@
   <h2>Born in the pit.  Raised on the mat.</h2>
   <div class="statement-right">
     <p>We're a cheer gym run by people who grew up on Maiden and Metallica. Our athletes are tough, loud, and proud. Our gear matches.</p>
-    <a href="#" class="btn-black">About the Gym</a>
+    <a href="#story-expanded" class="btn-black">About the Gym</a>
   </div>
 </section>
 
 <!-- Our Story Expanded -->
-<section class="story-expanded">
+<section class="story-expanded" id="story-expanded">
   <div class="story-left">
     <span class="story-label">Our Story</span>
     <h2>We Didn't Start a Gym to Blend In.</h2>
@@ -1515,15 +1515,15 @@
     </div>
     <div class="footer-col">
       <h4>Shop</h4>
-      <a href="#drop01">All Products</a>
-      <a href="#drop01">T-Shirts</a>
-      <a href="#hoodies">Hoodies</a>
+      <a href="#catalog">All Products</a>
+      <a href="#catalog" onclick="setTimeout(()=>filterCatalog(document.querySelector('[data-filter=tee]')),100);return true;">T-Shirts</a>
+      <a href="#catalog" onclick="setTimeout(()=>filterCatalog(document.querySelector('[data-filter=hoodie]')),100);return true;">Hoodies</a>
       <a href="#hoodies">Hats — Coming Soon</a>
     </div>
     <div class="footer-col">
       <h4>Info</h4>
       <a href="#story">Our Story</a>
-      <a href="#" onclick="openSizeGuide();return false;">Sizing Guide</a>
+      <a href="#" onclick="openSizeGuideOverlay();return false;">Sizing Guide</a>
       <a href="#" onclick="openShipping();return false;">Shipping</a>
       <a href="#" onclick="openReturns();return false;">Returns</a>
     </div>
@@ -1701,6 +1701,44 @@
   </div>
 </div>
 
+<!-- Standalone Sizing Guide Overlay -->
+<div class="policy-overlay" id="sizeGuideOverlay" onclick="if(event.target===this)closeSizeGuideOverlay()">
+  <div class="policy-box">
+    <button class="policy-close" onclick="closeSizeGuideOverlay()">✕</button>
+    <div class="policy-eyebrow">Heavy Metal Cheer Gym</div>
+    <h2>Size Guide.</h2>
+    <div class="policy-divider"></div>
+    <div class="policy-block">
+      <h3>Comfort Colors 1717 — T-Shirts</h3>
+      <table class="size-table">
+        <thead><tr><th>Size</th><th>Chest (in)</th><th>Body Length (in)</th><th>Sleeve (in)</th></tr></thead>
+        <tbody>
+          <tr><td>S</td><td>18</td><td>28</td><td>8.5</td></tr>
+          <tr><td>M</td><td>20</td><td>29</td><td>9</td></tr>
+          <tr><td>L</td><td>22</td><td>30</td><td>9.5</td></tr>
+          <tr><td>XL</td><td>24</td><td>31</td><td>10</td></tr>
+          <tr><td>2XL</td><td>26</td><td>32</td><td>10.5</td></tr>
+        </tbody>
+      </table>
+      <p class="size-note">Relaxed, slightly boxy fit. Measurements are of the garment laid flat. When in doubt, size down for women's; true to size for men's.</p>
+    </div>
+    <div class="policy-block">
+      <h3>Comfort Colors 1567 — Hoodies</h3>
+      <table class="size-table">
+        <thead><tr><th>Size</th><th>Chest (in)</th><th>Body Length (in)</th><th>Sleeve (in)</th></tr></thead>
+        <tbody>
+          <tr><td>S</td><td>20</td><td>27</td><td>25</td></tr>
+          <tr><td>M</td><td>22</td><td>28</td><td>26</td></tr>
+          <tr><td>L</td><td>24</td><td>29</td><td>27</td></tr>
+          <tr><td>XL</td><td>26</td><td>30</td><td>28</td></tr>
+          <tr><td>2XL</td><td>28</td><td>31</td><td>29</td></tr>
+        </tbody>
+      </table>
+      <p class="size-note">Garment-dyed, slightly relaxed fit. Women's typically size up one for an oversized look; true to size for a fitted feel.</p>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast">Added to Cart</div>
 
 <script>
@@ -1770,10 +1808,13 @@
     document.getElementById('mobileNav').classList.remove('open');
     document.getElementById('hamburgerBtn').classList.remove('active');
   }
-  // Close mobile nav when scrolling away
-  window.addEventListener('scroll', () => {
-    if (document.getElementById('mobileNav').classList.contains('open')) closeMobileNav();
-  }, { passive: true });
+
+  function openSizeGuideOverlay() {
+    document.getElementById('sizeGuideOverlay').classList.add('open');
+  }
+  function closeSizeGuideOverlay() {
+    document.getElementById('sizeGuideOverlay').classList.remove('open');
+  }
 
   function openCart() {
     renderCart();
@@ -1960,7 +2001,7 @@
 
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
-    closeModal(); closeCart(); closeContact(); closeShipping(); closeReturns(); closeSizeGuide();
+    closeModal(); closeCart(); closeContact(); closeShipping(); closeReturns(); closeSizeGuide(); closeSizeGuideOverlay(); closeMobileNav();
   });
 
   function pickSize(btn) {
