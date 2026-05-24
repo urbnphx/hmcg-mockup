@@ -1390,9 +1390,11 @@
       cart.push({ name: currentName, size, price: current.price, img: current.design, qty: 1 });
     }
     updateCartCount();
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2200);
+    renderCart();
+    // Close product modal, slide cart open
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartBackdrop').classList.add('open');
   }
 
   function addToCartToast() {
