@@ -1015,6 +1015,7 @@
     nav { padding: 0 20px; height: 54px; }
     .nav-links a { display: none; }
     .nav-logo { font-size: 11px; letter-spacing: 3px; }
+    .hamburger { display: flex; }
 
     /* Hero */
     .hero { grid-template-columns: 1fr; min-height: auto; }
@@ -1054,19 +1055,41 @@
       border-top: 1px solid var(--rule); padding-top: 40px; margin-top: 40px;
     }
 
-    /* Modal */
+    /* Modal — scrollable bottom sheet */
     .modal {
-      grid-template-columns: 1fr;
-      grid-template-rows: 52vw 1fr;
+      display: flex;
+      flex-direction: column;
       width: 100%; max-width: 100vw;
-      max-height: 95vh;
+      max-height: 92vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       border-left: none; border-right: none;
       border-radius: 0;
       align-self: flex-end;
     }
-    .modal-img-panel { border-right: none; border-bottom: 1px solid var(--rule); }
-    .modal-img-wrap { min-height: 0; padding: 16px; }
-    .modal-details { padding: 24px 20px 32px; overflow-y: auto; gap: 16px; }
+    .modal-img-panel {
+      flex-shrink: 0;
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+    }
+    .modal-img-wrap {
+      height: 72vw;
+      min-height: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .modal-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      max-height: none;
+    }
+    .car-dots { padding: 12px 0; }
+    .modal-details {
+      flex-shrink: 0;
+      padding: 28px 20px 48px;
+      overflow-y: visible;
+      gap: 16px;
+    }
     .modal-name { font-size: 22px; }
     .modal-overlay { align-items: flex-end; }
     .size-overlay { padding: 28px 20px; }
@@ -1090,9 +1113,57 @@
     .grid { grid-template-columns: 1fr; }
     .grid-row2 { grid-template-columns: 1fr; }
     .footer-top { grid-template-columns: 1fr; gap: 28px; }
-    .modal { grid-template-rows: 60vw 1fr; }
+    .modal-img-wrap { height: 80vw; }
     .hero-right { min-height: 80vw; }
   }
+
+  /* ── HAMBURGER + MOBILE NAV ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--white);
+    transition: all .2s;
+  }
+  .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 54px; left: 0; right: 0;
+    background: var(--black);
+    border-bottom: 1px solid var(--rule);
+    z-index: 98;
+    flex-direction: column;
+  }
+  .mobile-nav a, .mobile-nav-cart {
+    display: block;
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--rule);
+    font-family: 'Inter', system-ui, sans-serif;
+    cursor: pointer;
+  }
+  .mobile-nav a:last-child, .mobile-nav-cart { border-bottom: none; }
+  .mobile-nav.open { display: flex; }
 
   /* ── BADGE ── */
   .mockup-badge {
@@ -1116,11 +1187,22 @@
   <div class="nav-logo">Heavy Metal Cheer Gym</div>
   <div class="nav-links">
     <a href="#drop01">Catalog</a>
+    <a href="#hoodies">Hoodies</a>
     <a href="#story">Our Story</a>
     <a href="#" onclick="openContact(event)">Contact</a>
     <div class="nav-cart" id="navCart" onclick="openCart()" style="cursor:pointer;">Cart (0)</div>
   </div>
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#drop01" onclick="closeMobileNav()">T-Shirts</a>
+  <a href="#hoodies" onclick="closeMobileNav()">Hoodies</a>
+  <a href="#story" onclick="closeMobileNav()">Our Story</a>
+  <a href="#" onclick="openContact(event);closeMobileNav()">Contact</a>
+  <div class="mobile-nav-cart" onclick="openCart();closeMobileNav()">Cart</div>
+</div>
 
 <!-- Hero -->
 <section class="hero">
@@ -1593,6 +1675,21 @@
     renderCart();
   }
 
+  function toggleMobileNav() {
+    const nav = document.getElementById('mobileNav');
+    const btn = document.getElementById('hamburgerBtn');
+    nav.classList.toggle('open');
+    btn.classList.toggle('active');
+  }
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('hamburgerBtn').classList.remove('active');
+  }
+  // Close mobile nav when scrolling away
+  window.addEventListener('scroll', () => {
+    if (document.getElementById('mobileNav').classList.contains('open')) closeMobileNav();
+  }, { passive: true });
+
   function openCart() {
     renderCart();
     document.getElementById('cartDrawer').classList.add('open');
@@ -1647,8 +1744,7 @@
     'Misfits Cheerleader Hoodie': {
       images: [D+'misfits-cheerleader-hoodie.png', D+'misfits-cheerleader-hoodie2.png',
                D+'misfits-cheerleader-hoodie4.png',
-               D+'misfits-cheerleader-hoodie5.png', D+'misfits-cheerleader-hoodie6.png',
-               D+'HMCG-brand-wide-mood-hoodie-shot.png'],
+               D+'misfits-cheerleader-hoodie5.png', D+'misfits-cheerleader-hoodie6.png'],
       material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
     },
     'Four Bars Hoodie': {
