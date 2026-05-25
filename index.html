@@ -1715,6 +1715,24 @@
         </table>
         <p class="size-note">Measurements are of the garment laid flat. Garment-dyed, slightly relaxed unisex fit.</p>
       </div>
+      <div id="sizeOverlayHat" style="display:none">
+        <h3>Structured Caps — Trucker &amp; Snapback</h3>
+        <table class="size-table">
+          <thead><tr><th>Size</th><th>Head Circumference</th><th>Fits</th></tr></thead>
+          <tbody>
+            <tr><td>S/M</td><td>21.5" – 22.75"</td><td>Most women, some men</td></tr>
+            <tr><td>L/XL</td><td>22.75" – 24.25"</td><td>Most men</td></tr>
+          </tbody>
+        </table>
+        <h3>Unstructured — Dad Hat &amp; Beanie</h3>
+        <table class="size-table">
+          <thead><tr><th>Size</th><th>Fit</th></tr></thead>
+          <tbody>
+            <tr><td>One Size</td><td>Adjustable / stretch — fits most</td></tr>
+          </tbody>
+        </table>
+        <p class="size-note">Measure around your head about 1" above your ears. When between sizes, size up.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -1790,6 +1808,7 @@
 
 <div class="toast" id="toast">Added to Cart</div>
 
+<script src="products.js"></script>
 <script>
   /* ── CART STATE ── */
   let cart = [];
@@ -1913,69 +1932,7 @@
   }
 
   /* ── PRODUCT DATA ── */
-  const D = 'HMCG-Designs/';
-  const products = {
-    /* ── HOODIES ── */
-    'Misfits Cheerleader Hoodie': {
-      images: [D+'misfits-cheerleader-hoodie.png', D+'misfits-cheerleader-hoodie2.png',
-               D+'misfits-cheerleader-hoodie4.png',
-               D+'misfits-cheerleader-hoodie5.png', D+'misfits-cheerleader-hoodie6.png'],
-      type: 'hoodie',
-      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
-    },
-    'Four Bars Hoodie': {
-      images: [D+'black-flag-bars-hoodie.png', D+'black-flag-bars-hoodie2.png',
-               D+'black-flag-bars-hoodie4.png',
-               D+'black-flag-bars-hoodie5.png',
-               D+'HMCG-brand-wide-lifestyle-hoodie-shot.png'],
-      type: 'hoodie',
-      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
-    },
-    'The Iron Maidens Hoodie': {
-      images: [D+'iron-maidens-hoodie.png', D+'iron-maidens-hoodie2.png',
-               D+'iron-maidens-hoodie3.png', D+'iron-maidens-hoodie4.png',
-               D+'HMCG-brand-wide-lifestyle-hoodie-shot2.png'],
-      type: 'hoodie',
-      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
-    },
-    'Heavy Badge Hoodie': {
-      images: [D+'harley-badge-hoodie.png', D+'harley-badge-hoodie2.png',
-               D+'harley-badge-hoodie3.png', D+'harley-badge-hoodie4.png'],
-      type: 'hoodie',
-      material: 'Comfort Colors 1567 · Black', price: '$115', bg: '#0a0a0a', fit: 'cover'
-    },
-    'Winged Skull Hoodie': {
-      images: [D+'winged-skull-hoodie.png', D+'winged-skull-hoodie2.png'],
-      type: 'hoodie',
-      material: 'Comfort Colors 1567 · Bone', price: '$115', bg: '#f5f0e8', fit: 'cover'
-    },
-    /* ── TEES ── */
-    'Misfits Cheerleader': {
-      images: [D+'misfits-cheerleader.png', D+'misfits-cheerleader2.png'],
-      type: 'tee',
-      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
-    },
-    'Four Bars': {
-      images: [D+'black-flag-bars.png', D+'black-flag-bars3.png'],
-      type: 'tee',
-      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
-    },
-    'The Iron Maidens': {
-      images: [D+'iron-maidens.png', D+'iron-maidens2.png', D+'iron-maidens4.png'],
-      type: 'tee',
-      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
-    },
-    'Heavy Badge': {
-      images: [D+'harley-badge.png', D+'harley-badge2.png'],
-      type: 'tee',
-      material: 'Comfort Colors 1717 · Black', price: '$45', bg: '#0a0a0a', fit: 'contain'
-    },
-    'Winged Skull': {
-      images: [D+'winged-skull.png', D+'winged-skull2.png'],
-      type: 'tee',
-      material: 'Comfort Colors 1717 · Bone', price: '$45', bg: '#f5f0e8', fit: 'contain'
-    }
-  };
+  /* products loaded from products.js */
 
   let current = null;
   let currentName = '';
@@ -2012,11 +1969,17 @@
       document.querySelectorAll('.garment-btn')[0].classList.add('garment-active');
       garmentNote.textContent = 'Unisex · relaxed boxy fit · S–3XL';
       renderSizes('1717');
-    } else {
+    } else if (p.type === 'hoodie') {
       garmentToggle.style.display = 'none';
       garmentNote.style.display = 'none';
       currentGarment = '1567';
       renderSizes('hoodie');
+    } else {
+      /* hat or any future type */
+      garmentToggle.style.display = 'none';
+      garmentNote.style.display = 'none';
+      currentGarment = 'hat';
+      renderSizes('hat');
     }
     document.getElementById('sizeOverlay').classList.remove('open');
     document.getElementById('modalOverlay').classList.add('open');
@@ -2083,9 +2046,19 @@
   }
 
   function renderSizes(garment) {
-    const sizes = garment === '3023CL' ? ['S','M','L','XL','2XL'] : ['S','M','L','XL','2XL','3XL'];
+    let sizes;
+    if (garment === '3023CL') {
+      sizes = ['S','M','L','XL','2XL'];
+    } else if (garment === 'hat' && current && current.sizes) {
+      sizes = current.sizes;
+    } else if (garment === 'hoodie') {
+      sizes = ['S','M','L','XL','2XL','3XL'];
+    } else {
+      sizes = ['S','M','L','XL','2XL','3XL']; /* 1717 default */
+    }
+    const defaultIdx = sizes.length <= 2 ? 0 : 2;
     document.getElementById('modalSizes').innerHTML = sizes.map((s, i) =>
-      `<button class="sz${i === 2 ? ' sz-active' : ''}" onclick="pickSize(this)">${s}</button>`
+      `<button class="sz${i === defaultIdx ? ' sz-active' : ''}" onclick="pickSize(this)">${s}</button>`
     ).join('');
   }
 
@@ -2111,9 +2084,9 @@
   }
 
   function openSizeGuide() {
-    const isHoodie = currentProductType === 'hoodie';
-    document.getElementById('sizeOverlayTee').style.display = isHoodie ? 'none' : '';
-    document.getElementById('sizeOverlayHoodie').style.display = isHoodie ? '' : 'none';
+    document.getElementById('sizeOverlayTee').style.display    = currentProductType === 'tee'    ? '' : 'none';
+    document.getElementById('sizeOverlayHoodie').style.display = currentProductType === 'hoodie' ? '' : 'none';
+    document.getElementById('sizeOverlayHat').style.display    = currentProductType === 'hat'    ? '' : 'none';
     document.getElementById('sizeOverlay').classList.add('open');
   }
 
